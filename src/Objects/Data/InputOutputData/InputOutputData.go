@@ -13,3 +13,9 @@ type InputOutputData struct {
 //set json doc
 
 //set type
+
+//get xml doc
+
+//get json doc
+
+//get type

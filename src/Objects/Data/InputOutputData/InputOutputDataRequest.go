@@ -20,6 +20,10 @@ func (r InputOutputDataReq) Years() []string {
 	return r.years
 }
 
+func (r InputOutputDataReq) addYear(year string) {
+	r.years = append(r.years, year)
+}
+
 func (r InputOutputDataReq) setYears(newYears []string) {
 
 	for _, year := range newYears {

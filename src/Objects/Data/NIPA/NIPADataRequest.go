@@ -32,3 +32,8 @@ func (r NIPADataRequest) setFrequency(newFrequencies []string) {
 func (r NIPADataRequest) Years() []string {
 	return r.years
 }
+
+//setYears sets the value of years field of a NIPADataRequest object.
+func (r NIPADataRequest) setYears(newYears []string) {
+	r.years = newYears
+}

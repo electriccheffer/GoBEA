@@ -157,11 +157,29 @@ func TestInputOutputDataReq_AddYear(t *testing.T) {
 
 func TestInputOutputDataReq_SetTableId(t *testing.T) {
 	//match if correct
+	nullCase := InputOutputDataReq{
+		tableId:      0,
+		years:        nil,
+		returnFormat: "",
+	}
+	nullCase.setTableId(12)
+	if nullCase.TableId() != 12 {
+		t.Error("nullCase.TableId() != 12")
+	}
 
 	//match if offered
 }
 
 func TestInputOutputDataReq_ToString(t *testing.T) {
-	//match if correct
+
+	nonNullCase := InputOutputDataReq{
+		tableId:      12,
+		years:        []string{"2000", "2010"},
+		returnFormat: "JSON",
+	}
+	asString, _ := nonNullCase.toString()
+	if asString != "12 2000 2010 JSON" {
+		t.Error("asString not equal")
+	}
 
 }

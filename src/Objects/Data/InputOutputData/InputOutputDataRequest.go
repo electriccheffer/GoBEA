@@ -51,7 +51,7 @@ func (r InputOutputDataReq) TableId() int {
 
 //setTableId provides a method for setting the tableId field of the InputOutputDataReq
 //struct
-func (r InputOutputDataReq) setTableId(id int) {
+func (r *InputOutputDataReq) setTableId(id int) {
 
 	r.tableId = id
 
@@ -64,10 +64,9 @@ func (r InputOutputDataReq) toString() (string, int) {
 	var returnYears string
 	for _, year := range r.years {
 
-		returnYears += year
+		returnYears += " " + year
 
 	}
-
-	return strconv.Itoa(r.tableId) + returnYears + r.returnFormat, 0
+	return strconv.Itoa(r.tableId) + returnYears + " " + r.returnFormat, 0
 
 }

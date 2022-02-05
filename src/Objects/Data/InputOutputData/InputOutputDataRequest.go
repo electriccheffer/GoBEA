@@ -29,7 +29,11 @@ func (r InputOutputDataReq) Years() []string {
 }
 
 //addYear provides a method for appending a year to the years[] variable
-func (r InputOutputDataReq) addYear(year string) {
+func (r *InputOutputDataReq) addYear(year string) {
+	if r.years == nil {
+		r.years = []string{year}
+		return
+	}
 	r.years = append(r.years, year)
 }
 

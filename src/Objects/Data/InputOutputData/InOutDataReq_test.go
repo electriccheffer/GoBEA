@@ -125,14 +125,34 @@ func TestInputOutputDataReq_SetYears(t *testing.T) {
 	if nullCase.Years()[0] != "2010" {
 		t.Error("nullCase.Years()[0] != 2010")
 	}
-	//match if offered years
 
 }
 
 func TestInputOutputDataReq_AddYear(t *testing.T) {
 	//match if correct
-
+	nullCase := InputOutputDataReq{
+		tableId:      0,
+		years:        nil,
+		returnFormat: "",
+	}
 	//match if offered
+	nullCase.addYear("2000")
+	if nullCase.Years()[0] != "2000" {
+		t.Error("nullCase.Years()[0] != 2000")
+	}
+
+	nonNullCase := InputOutputDataReq{
+		tableId:      0,
+		years:        []string{"2000"},
+		returnFormat: "",
+	}
+	nonNullCase.addYear("2010")
+	if nonNullCase.Years()[1] != "2010" {
+		t.Error("nonNullCase.Years()[1] != 2010")
+	}
+	if nonNullCase.Years()[0] != "2000" {
+		t.Error("nonNullCase.Years()[0] != 2000")
+	}
 }
 
 func TestInputOutputDataReq_SetTableId(t *testing.T) {

@@ -35,13 +35,8 @@ func (r InputOutputDataReq) addYear(year string) {
 
 //setYears provides a method for changing the entire years[] with a new array of years[]
 //for the InputOutputDataReq struct
-func (r InputOutputDataReq) setYears(newYears []string) {
-
-	for _, year := range newYears {
-
-		r.years = append(newYears, year)
-
-	}
+func (r *InputOutputDataReq) setYears(newYears []string) {
+	r.years = newYears
 }
 
 //TableId provides a method for getting the tableId of the InputOutputDataReq

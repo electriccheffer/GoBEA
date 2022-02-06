@@ -14,7 +14,7 @@ func (r NIPADataRequest) TableId() int {
 }
 
 //setTableId sets the value of the tableId field for a NIPADataRequest object.
-func (r NIPADataRequest) setTableId(newTableId int) {
+func (r *NIPADataRequest) setTableId(newTableId int) {
 	r.tableId = newTableId
 }
 
@@ -24,7 +24,7 @@ func (r NIPADataRequest) Frequency() []string {
 }
 
 //setFrequency sets the value of the frequency field fo a NIPADataRequest object.
-func (r NIPADataRequest) setFrequency(newFrequencies []string) {
+func (r *NIPADataRequest) setFrequency(newFrequencies []string) {
 	r.frequency = newFrequencies
 }
 
@@ -34,6 +34,6 @@ func (r NIPADataRequest) Years() []string {
 }
 
 //setYears sets the value of years field of a NIPADataRequest object.
-func (r NIPADataRequest) setYears(newYears []string) {
+func (r *NIPADataRequest) setYears(newYears []string) {
 	r.years = newYears
 }

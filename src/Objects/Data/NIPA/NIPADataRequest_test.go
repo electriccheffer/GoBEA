@@ -130,3 +130,44 @@ func TestNIPADataRequest_setTableId(t *testing.T) {
 	}
 
 }
+
+func TestNIPADataRequest_addFrequency(t *testing.T) {
+	nullCase := NIPADataRequest{
+		tableId:   0,
+		frequency: nil,
+		years:     nil,
+	}
+
+	nullCase.addFrequency("2012")
+	if nullCase.Frequency()[0] != "2012" {
+		t.Error("nullCase.Frequency()[0] != 2012")
+	}
+	nullCase.addFrequency("2013")
+	if nullCase.Frequency()[1] != "2013" {
+		t.Error("nullCase.Frequency()[1] != 2013")
+	}
+	if len(nullCase.Frequency()) != 2 {
+		t.Error("len(nullCase.Frequency()) != 2")
+	}
+}
+
+func TestNIPADataRequest_addYear(t *testing.T) {
+	nullCase := NIPADataRequest{
+		tableId:   0,
+		frequency: nil,
+		years:     nil,
+	}
+
+	nullCase.addYear("210")
+	if nullCase.Years()[0] != "210" {
+		t.Error("nullCase.Years()[0] != 210")
+	}
+	nullCase.addYear("2000")
+	if nullCase.Years()[1] != "2000" {
+		t.Error("nullCase.Years()[1] != 2000")
+	}
+	if len(nullCase.Years()) != 2 {
+		t.Error("len(nullCase.Years()) != 2")
+	}
+
+}

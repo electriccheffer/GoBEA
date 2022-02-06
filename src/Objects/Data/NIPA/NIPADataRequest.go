@@ -28,6 +28,11 @@ func (r *NIPADataRequest) setFrequency(newFrequencies []string) {
 	r.frequency = newFrequencies
 }
 
+//addFrequency adds a new frequency to the end of the list of frequencies in the NIPADataRequest
+func (r *NIPADataRequest) addFrequency(newFrequency string) {
+	r.frequency = append(r.frequency, newFrequency)
+}
+
 //Years returns the array of years in the NIPADataRequest.
 func (r NIPADataRequest) Years() []string {
 	return r.years
@@ -36,4 +41,8 @@ func (r NIPADataRequest) Years() []string {
 //setYears sets the value of years field of a NIPADataRequest object.
 func (r *NIPADataRequest) setYears(newYears []string) {
 	r.years = newYears
+}
+
+func (r *NIPADataRequest) addYear(newYear string) {
+	r.years = append(r.years, newYear)
 }

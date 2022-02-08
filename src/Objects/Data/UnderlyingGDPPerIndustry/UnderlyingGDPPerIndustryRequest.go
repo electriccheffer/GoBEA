@@ -37,6 +37,11 @@ func (r *UnderLyingGDPPerIndustryRequest) setYears(newYears []string) {
 	r.years = newYears
 }
 
+//addYear appends a year to the years field of UnderLyingGDPPerIndustryRequest object
+func (r *UnderLyingGDPPerIndustryRequest) addYear(newYear string) {
+	r.years = append(r.years, newYear)
+}
+
 //Industry returns the value of the UnderLyingGDPPerIndustryRequest object
 func (r UnderLyingGDPPerIndustryRequest) Industry() string {
 	return r.industry

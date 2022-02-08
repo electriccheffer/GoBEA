@@ -86,3 +86,18 @@ func TestUnderLyingGDPPerIndustryRequest_setFrequency(t *testing.T) {
 		t.Error("nullCase.Frequency() != \"another\"")
 	}
 }
+
+func TestUnderLyingGDPPerIndustryRequest_setYears(t *testing.T) {
+	nullCase := UnderLyingGDPPerIndustryRequest{
+		tableId:   0,
+		frequency: "",
+		years:     nil,
+		industry:  "",
+	}
+
+	nullCase.setYears([]string{"2004", "2003", "2007"})
+	if nullCase.Years()[0] != "2004" {
+		t.Error("nullCase.Years()[0] != \"2004\"")
+	}
+
+}

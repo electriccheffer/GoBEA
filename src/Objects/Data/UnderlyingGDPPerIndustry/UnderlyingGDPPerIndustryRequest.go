@@ -22,6 +22,11 @@ func (r UnderLyingGDPPerIndustryRequest) Frequency() string {
 	return r.frequency
 }
 
+//setFrequency sets the frequency field of the UnderLyingGDPPerIndustryRequest object
+func (r *UnderLyingGDPPerIndustryRequest) setFrequency(newFrequency string) {
+	r.frequency = newFrequency
+}
+
 //Years returns an array of strings for the UnderLyingGDPPerIndustryRequest object
 func (r UnderLyingGDPPerIndustryRequest) Years() []string {
 	return r.years

@@ -11,3 +11,8 @@ type UnderLyingGDPPerIndustryRequest struct {
 func (r UnderLyingGDPPerIndustryRequest) TableId() int {
 	return r.tableId
 }
+
+//Frequency returns the frequency value for the UnderLyingGDPPerIndustryRequest object
+func (r UnderLyingGDPPerIndustryRequest) Frequency() string {
+	return r.frequency
+}

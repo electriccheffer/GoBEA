@@ -53,3 +53,22 @@ func TestUnderLyingGDPPerIndustryRequest_Industry(t *testing.T) {
 	}
 
 }
+
+func TestUnderLyingGDPPerIndustryRequest_setTableId(t *testing.T) {
+	nullCase := UnderLyingGDPPerIndustryRequest{
+		tableId:   0,
+		frequency: "",
+		years:     nil,
+		industry:  "",
+	}
+
+	nullCase.setTableId(12)
+	if nullCase.TableId() != 12 {
+		t.Error("nullCase.TableId() != 12")
+	}
+
+	nullCase.setTableId(13)
+	if nullCase.TableId() != 13 {
+		t.Error("nullCase.TableId() != 13")
+	}
+}

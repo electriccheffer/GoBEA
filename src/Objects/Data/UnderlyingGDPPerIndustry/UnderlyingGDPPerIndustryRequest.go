@@ -12,6 +12,11 @@ func (r UnderLyingGDPPerIndustryRequest) TableId() int {
 	return r.tableId
 }
 
+//setTableId sets the value of the tableId field of the UnderLyingGDPPerIndustryRequest object
+func (r *UnderLyingGDPPerIndustryRequest) setTableId(newId int) {
+	r.tableId = newId
+}
+
 //Frequency returns the frequency value for the UnderLyingGDPPerIndustryRequest object
 func (r UnderLyingGDPPerIndustryRequest) Frequency() string {
 	return r.frequency

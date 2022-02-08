@@ -41,3 +41,8 @@ func (r *UnderLyingGDPPerIndustryRequest) setYears(newYears []string) {
 func (r UnderLyingGDPPerIndustryRequest) Industry() string {
 	return r.industry
 }
+
+//setIndustry sets the industry field of the UnderLyingGDPPerIndustryRequest object
+func (r *UnderLyingGDPPerIndustryRequest) setIndustry(newIndustry string) {
+	r.industry = newIndustry
+}

@@ -16,3 +16,13 @@ func (r UnderLyingGDPPerIndustryRequest) TableId() int {
 func (r UnderLyingGDPPerIndustryRequest) Frequency() string {
 	return r.frequency
 }
+
+//Years returns an array of strings for the UnderLyingGDPPerIndustryRequest object
+func (r UnderLyingGDPPerIndustryRequest) Years() []string {
+	return r.years
+}
+
+//Industry returns the value of the UnderLyingGDPPerIndustryRequest object
+func (r UnderLyingGDPPerIndustryRequest) Industry() string {
+	return r.industry
+}

@@ -1,5 +1,7 @@
 package UnderlyingGDPPerIndustry
 
+import "strconv"
+
 type UnderLyingGDPPerIndustryRequest struct {
 	tableId   int
 	frequency string
@@ -50,4 +52,17 @@ func (r UnderLyingGDPPerIndustryRequest) Industry() string {
 //setIndustry sets the industry field of the UnderLyingGDPPerIndustryRequest object
 func (r *UnderLyingGDPPerIndustryRequest) setIndustry(newIndustry string) {
 	r.industry = newIndustry
+}
+
+//toString() a function which returns the current string representation of an UnderLyingGDPPerIndustryRequest object
+func (r UnderLyingGDPPerIndustryRequest) toString() string {
+
+	var request = ""
+	request += r.Frequency() + " "
+	request += r.Industry() + " "
+	request += strconv.Itoa(r.TableId())
+	for i := 0; i < len(r.Years()); i++ {
+		request += " " + r.Years()[i]
+	}
+	return request
 }

@@ -136,3 +136,17 @@ func TestUnderLyingGDPPerIndustryRequest_addYear(t *testing.T) {
 	}
 
 }
+
+func TestUnderLyingGDPPerIndustryRequest_toString(t *testing.T) {
+	nullCase := UnderLyingGDPPerIndustryRequest{
+		tableId:   2,
+		frequency: "yearly",
+		years:     []string{"2000", "2010"},
+		industry:  "steel",
+	}
+
+	if nullCase.toString() != "yearly steel 2 2000 2010" {
+		t.Error("nullCase.toString() != \"yearly steel 2 2000 2010\"")
+	}
+
+}

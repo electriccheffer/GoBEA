@@ -1,4 +1,4 @@
-package InputOutputData
+package InputOutput
 
 type InputOutputData struct {
 

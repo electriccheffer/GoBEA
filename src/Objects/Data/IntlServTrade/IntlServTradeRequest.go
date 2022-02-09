@@ -1,4 +1,4 @@
-package IntlServTradeRequest
+package IntlServTrade
 
 type IntlServTradeRequest struct {
 	typeOfService  string

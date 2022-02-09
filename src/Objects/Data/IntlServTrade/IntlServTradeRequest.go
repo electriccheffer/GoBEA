@@ -30,6 +30,7 @@ func (i *IntlServTradeRequest) Affiliation() string {
 	return i.affiliation
 }
 
+//SetAffiliation is a method used to set the affiliation field in the IntlServTradeRequest object
 func (i *IntlServTradeRequest) SetAffiliation(affiliation string) {
 	i.affiliation = affiliation
 }

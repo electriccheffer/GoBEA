@@ -25,6 +25,20 @@ func TestIntlServTradeRequest_Affiliation(t *testing.T) {
 
 }
 
+func TestIntlServTradeRequest_SetAffiliation(t *testing.T) {
+	nullCase := IntlServTradeRequest{
+		typeOfService:  "",
+		tradeDirection: "",
+		affiliation:    "",
+		areaOrCountry:  "",
+	}
+	nullCase.SetAffiliation("notGood")
+	if nullCase.Affiliation() != "notGood" {
+		t.Error("nullCase.Affiliation() != \"notGood\"")
+	}
+
+}
+
 func TestIntlServTradeRequest_AreaOrCountry(t *testing.T) {
 	nullCase := IntlServTradeRequest{
 		typeOfService:  "",

@@ -135,3 +135,18 @@ func TestIntlServTradeRequest_TypeOfService(t *testing.T) {
 	}
 
 }
+
+func TestIntlServTradeRequest_SetTypeOfService(t *testing.T) {
+	nullCase := IntlServTradeRequest{
+		typeOfService:  "",
+		tradeDirection: "",
+		affiliation:    "",
+		areaOrCountry:  "",
+	}
+
+	nullCase.SetTypeOfService("good")
+	if nullCase.TypeOfService() != "good" {
+		t.Error("nullCase.TypeOfService() != \"good\"")
+	}
+
+}

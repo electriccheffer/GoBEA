@@ -12,6 +12,7 @@ func (i *IntlServTradeRequest) TypeOfService() string {
 	return i.typeOfService
 }
 
+//SetTypeOfService is a method used to set the typeOfService field of the IntlServTradeRequest object
 func (i *IntlServTradeRequest) SetTypeOfService(typeOfService string) {
 	i.typeOfService = typeOfService
 }
@@ -21,6 +22,7 @@ func (i *IntlServTradeRequest) TradeDirection() string {
 	return i.tradeDirection
 }
 
+//SetTradeDirection is a method used to set the tradeDirection field of the IntlServTradeRequest object
 func (i *IntlServTradeRequest) SetTradeDirection(tradeDirection string) {
 	i.tradeDirection = tradeDirection
 }

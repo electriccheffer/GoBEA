@@ -49,6 +49,20 @@ func TestIntlServTradeRequest_AreaOrCountry(t *testing.T) {
 
 }
 
+func TestIntlServTradeRequest_SetAreaOrCountry(t *testing.T) {
+	nullCase := IntlServTradeRequest{
+		typeOfService:  "",
+		tradeDirection: "",
+		affiliation:    "",
+		areaOrCountry:  "",
+	}
+	nullCase.SetAreaOrCountry("United States")
+	if nullCase.AreaOrCountry() != "United States" {
+		t.Error("nullCase.AreaOrCountry() != \"United States\"")
+	}
+
+}
+
 func TestIntlServTradeRequest_TradeDirection(t *testing.T) {
 	nullCase := IntlServTradeRequest{
 		typeOfService:  "",

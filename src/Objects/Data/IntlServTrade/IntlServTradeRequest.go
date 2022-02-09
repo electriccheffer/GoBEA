@@ -39,6 +39,7 @@ func (i *IntlServTradeRequest) AreaOrCountry() string {
 	return i.areaOrCountry
 }
 
+//SetAreaOrCountry is a method used to set the areaOrCountry field in the IntlServTradeRequest object
 func (i *IntlServTradeRequest) SetAreaOrCountry(areaOrCountry string) {
 	i.areaOrCountry = areaOrCountry
 }

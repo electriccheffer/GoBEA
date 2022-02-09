@@ -46,3 +46,8 @@ func (i *IntlServTradeRequest) AreaOrCountry() string {
 func (i *IntlServTradeRequest) SetAreaOrCountry(areaOrCountry string) {
 	i.areaOrCountry = areaOrCountry
 }
+
+//toString returns a string representation of the IntlServTradeRequest object
+func (i *IntlServTradeRequest) toString() string {
+	return i.TypeOfService() + " " + i.TradeDirection() + " " + i.Affiliation() + " " + i.AreaOrCountry()
+}

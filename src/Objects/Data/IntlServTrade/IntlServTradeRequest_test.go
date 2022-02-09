@@ -150,3 +150,26 @@ func TestIntlServTradeRequest_SetTypeOfService(t *testing.T) {
 	}
 
 }
+
+func TestIntlServTradeRequest_toString(t *testing.T) {
+	nullCase := IntlServTradeRequest{
+		typeOfService:  "",
+		tradeDirection: "",
+		affiliation:    "",
+		areaOrCountry:  "",
+	}
+	if nullCase.toString() != "   " {
+		t.Error("nullCase.toString() != \"   \"")
+	}
+	nonNullCase := IntlServTradeRequest{
+		typeOfService:  "good",
+		tradeDirection: "theOtherWay",
+		affiliation:    "notgood",
+		areaOrCountry:  "usa",
+	}
+
+	if nonNullCase.toString() != "good theOtherWay notgood usa" {
+		t.Error("nonNullCase.toString() != \"good theOtherWay notgood usa\"")
+	}
+
+}

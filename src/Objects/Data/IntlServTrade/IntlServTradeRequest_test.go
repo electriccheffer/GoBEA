@@ -70,3 +70,26 @@ func TestIntlServTradeRequest_TradeDirection(t *testing.T) {
 	}
 
 }
+
+func TestIntlServTradeRequest_TypeOfService(t *testing.T) {
+	nullCase := IntlServTradeRequest{
+		typeOfService:  "",
+		tradeDirection: "",
+		affiliation:    "",
+		areaOrCountry:  "",
+	}
+	if nullCase.TypeOfService() != "" {
+		t.Error("nullCase.TypeOfService() != \"\"")
+	}
+	nonNullCase := IntlServTradeRequest{
+		typeOfService:  "big",
+		tradeDirection: "",
+		affiliation:    "",
+		areaOrCountry:  "",
+	}
+
+	if nonNullCase.TypeOfService() != "big" {
+		t.Error("nullCase.TypeOfService() != \"big\"")
+	}
+
+}

@@ -7,6 +7,7 @@ type IntlServTradeRequest struct {
 	areaOrCountry  string
 }
 
+//TypeOfService is a method used to access the typeOfService field of a IntlServTradeRequest object
 func (i *IntlServTradeRequest) TypeOfService() string {
 	return i.typeOfService
 }

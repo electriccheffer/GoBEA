@@ -15,6 +15,7 @@ func (i *IntlServTradeRequest) SetTypeOfService(typeOfService string) {
 	i.typeOfService = typeOfService
 }
 
+//TradeDirection is a method used to access the tradeDirection field of IntlServTradeRequest object
 func (i *IntlServTradeRequest) TradeDirection() string {
 	return i.tradeDirection
 }

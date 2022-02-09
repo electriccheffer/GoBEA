@@ -48,3 +48,25 @@ func TestIntlServTradeRequest_AreaOrCountry(t *testing.T) {
 	}
 
 }
+
+func TestIntlServTradeRequest_TradeDirection(t *testing.T) {
+	nullCase := IntlServTradeRequest{
+		typeOfService:  "",
+		tradeDirection: "",
+		affiliation:    "",
+		areaOrCountry:  "",
+	}
+	if nullCase.TradeDirection() != "" {
+		t.Error("nullCase.TradeDirection() != \"\"")
+	}
+	nonNullCase := IntlServTradeRequest{
+		typeOfService:  "",
+		tradeDirection: "backwards",
+		affiliation:    "",
+		areaOrCountry:  "",
+	}
+	if nonNullCase.TradeDirection() != "backwards" {
+		t.Error("nonNullCase.TradeDirection() != \"backwards\"")
+	}
+
+}

@@ -23,6 +23,7 @@ func (i *IntlServTradeRequest) SetTradeDirection(tradeDirection string) {
 	i.tradeDirection = tradeDirection
 }
 
+//Affiliation is a method used to access the affiliation field of the IntlServTradeRequest object
 func (i *IntlServTradeRequest) Affiliation() string {
 	return i.affiliation
 }
@@ -31,6 +32,7 @@ func (i *IntlServTradeRequest) SetAffiliation(affiliation string) {
 	i.affiliation = affiliation
 }
 
+//AreaOrCountry is a method used to access the areaOrCountry field in the IntlServTradeRequest object
 func (i *IntlServTradeRequest) AreaOrCountry() string {
 	return i.areaOrCountry
 }

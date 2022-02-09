@@ -99,6 +99,20 @@ func TestIntlServTradeRequest_TradeDirection(t *testing.T) {
 
 }
 
+func TestIntlServTradeRequest_SetTradeDirection(t *testing.T) {
+	nullCase := IntlServTradeRequest{
+		typeOfService:  "",
+		tradeDirection: "",
+		affiliation:    "",
+		areaOrCountry:  "",
+	}
+	nullCase.SetTradeDirection("thisway")
+	if nullCase.TradeDirection() != "thisway" {
+		t.Error("nullCase.TradeDirection() != \"thisway\"")
+	}
+
+}
+
 func TestIntlServTradeRequest_TypeOfService(t *testing.T) {
 	nullCase := IntlServTradeRequest{
 		typeOfService:  "",

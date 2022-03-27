@@ -175,7 +175,7 @@ func TestNewRegional(t *testing.T) {
 
 func TestRegional_toString(t *testing.T) {
 	nonNullCase := NewRegional("bryan", 22, "21", "322")
-	if nonNullCase.toString() != "bryan 22 21 322" {
+	if nonNullCase.toString() != "bryan, 22, 21, 322" {
 		t.Error("nonNullCase toString")
 	}
 }

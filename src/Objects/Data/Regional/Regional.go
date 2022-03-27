@@ -47,5 +47,5 @@ func NewRegional(tableName string, lineCode int, geoFips string, year string) *R
 
 func (r *Regional) toString() string {
 
-	return r.tableName + strconv.Itoa(r.lineCode) + r.geoFips + r.year
+	return r.tableName + " " + strconv.Itoa(r.lineCode) + " " + r.geoFips + " " + r.year
 }

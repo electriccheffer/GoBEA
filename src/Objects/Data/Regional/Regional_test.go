@@ -70,3 +70,18 @@ func TestRegional_GeoFips(t *testing.T) {
 	}
 
 }
+
+func TestRegional_SetTableName(t *testing.T) {
+	nullCase := Regional{
+		tableName: "",
+		lineCode:  0,
+		geoFips:   "",
+		year:      "",
+	}
+
+	nullCase.SetTableName("newName")
+	if nullCase.TableName() != "newName" {
+		t.Error("nullCase SetTableName")
+	}
+
+}

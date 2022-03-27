@@ -71,6 +71,28 @@ func TestRegional_GeoFips(t *testing.T) {
 
 }
 
+func TestRegional_Year(t *testing.T) {
+	nullCase := Regional{
+		tableName: "",
+		lineCode:  0,
+		geoFips:   "",
+		year:      "",
+	}
+	if nullCase.year != "" {
+		t.Error("nullCase Year")
+	}
+	nonNullCase := Regional{
+		tableName: "ryan",
+		lineCode:  3,
+		geoFips:   "58",
+		year:      "2003",
+	}
+	if nonNullCase.year != "2003" {
+		t.Error("nonNullCase Year")
+	}
+
+}
+
 func TestRegional_SetTableName(t *testing.T) {
 	nullCase := Regional{
 		tableName: "",
@@ -136,5 +158,17 @@ func TestRegional_SetYear(t *testing.T) {
 	nullCase.SetYear("2004")
 	if nullCase.Year() != "2004" {
 		t.Error("nullCase2 SetYear")
+	}
+}
+
+func TestNewRegional(t *testing.T) {
+	nullCase := NewRegional("", 0, "", "")
+
+	if nullCase.TableName() != "" && nullCase.LineCode() != 0 && nullCase.GeoFips() != "" && nullCase.Year() != "" {
+		t.Error("nullCase TestNewRegional")
+	}
+	nonNullCase := NewRegional("Matt", 20, "3002", "2010")
+	if nonNullCase.TableName() != "Matt" && nonNullCase.LineCode() != 20 && nonNullCase.GeoFips() != "3002" && nonNullCase.Year() != "2010" {
+		t.Error("nonNullCase TestNewRegional")
 	}
 }

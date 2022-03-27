@@ -171,3 +171,15 @@ func TestNIPADataRequest_addYear(t *testing.T) {
 	}
 
 }
+
+func TestNIPADataRequest_toString(t *testing.T) {
+	nonNullCase := NIPADataRequest{
+		tableId:   3,
+		frequency: []string{"2003", "2004"},
+		years:     []string{"122", "332"},
+	}
+
+	if nonNullCase.toString() != "3,2003 2004 ,122 332 " {
+		t.Error("nonNullCase toString()")
+	}
+}

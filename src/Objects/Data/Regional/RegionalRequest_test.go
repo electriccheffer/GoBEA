@@ -2,7 +2,7 @@ package Regional
 
 import "testing"
 
-func TestRegional_TableName(t *testing.T) {
+func TestRegionalRequestRequest_TableName(t *testing.T) {
 	nullCase := Regional{
 		tableName: "",
 		lineCode:  0,
@@ -25,7 +25,7 @@ func TestRegional_TableName(t *testing.T) {
 
 }
 
-func TestRegional_LineCode(t *testing.T) {
+func TestRegionalRequestRequest_LineCode(t *testing.T) {
 	nullCase := Regional{
 		tableName: "",
 		lineCode:  0,
@@ -49,7 +49,7 @@ func TestRegional_LineCode(t *testing.T) {
 	}
 }
 
-func TestRegional_GeoFips(t *testing.T) {
+func TestRegionalRequestRequest_GeoFips(t *testing.T) {
 	nullCase := Regional{
 		tableName: "",
 		lineCode:  0,
@@ -71,7 +71,7 @@ func TestRegional_GeoFips(t *testing.T) {
 
 }
 
-func TestRegional_Year(t *testing.T) {
+func TestRegionalRequestRequest_Year(t *testing.T) {
 	nullCase := Regional{
 		tableName: "",
 		lineCode:  0,
@@ -93,7 +93,7 @@ func TestRegional_Year(t *testing.T) {
 
 }
 
-func TestRegional_SetTableName(t *testing.T) {
+func TestRegionalRequestRequest_SetTableName(t *testing.T) {
 	nullCase := Regional{
 		tableName: "",
 		lineCode:  0,
@@ -112,7 +112,7 @@ func TestRegional_SetTableName(t *testing.T) {
 	}
 }
 
-func TestRegional_SetLineCode(t *testing.T) {
+func TestRegionalRequest_SetLineCode(t *testing.T) {
 	nullCase := Regional{
 		tableName: "",
 		lineCode:  0,
@@ -130,7 +130,7 @@ func TestRegional_SetLineCode(t *testing.T) {
 	}
 }
 
-func TestRegional_SetGeoFips(t *testing.T) {
+func TestRegionalRequest_SetGeoFips(t *testing.T) {
 	nullCase := Regional{
 		tableName: "",
 		lineCode:  0,
@@ -144,7 +144,7 @@ func TestRegional_SetGeoFips(t *testing.T) {
 
 }
 
-func TestRegional_SetYear(t *testing.T) {
+func TestRegionalRequest_SetYear(t *testing.T) {
 	nullCase := Regional{
 		tableName: "",
 		lineCode:  0,
@@ -173,7 +173,7 @@ func TestNewRegional(t *testing.T) {
 	}
 }
 
-func TestRegional_toString(t *testing.T) {
+func TestRegionalRequest_toString(t *testing.T) {
 	nonNullCase := NewRegional("bryan", 22, "21", "322")
 	if nonNullCase.toString() != "bryan, 22, 21, 322" {
 		t.Error("nonNullCase toString")

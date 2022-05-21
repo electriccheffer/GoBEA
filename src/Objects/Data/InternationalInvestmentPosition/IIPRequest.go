@@ -5,6 +5,15 @@ type IIPRequest struct {
 	component        string
 	frequency        string
 	year             string
+	returnFormat     string
+}
+
+func (I *IIPRequest) ReturnFormat() string {
+	return I.returnFormat
+}
+
+func (I *IIPRequest) SetReturnFormat(returnFormat string) {
+	I.returnFormat = returnFormat
 }
 
 func (I *IIPRequest) TypeOfInvestment() string {

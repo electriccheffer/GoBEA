@@ -102,4 +102,116 @@ func TestIIPRequest_TypeOfInvestment(t *testing.T) {
 	if nonNullCase.TypeOfInvestment() != "bad" {
 		t.Error("Test Failed type of investment should be bad")
 	}
+
+}
+
+func TestIIPRequest_ReturnFormat(t *testing.T) {
+	nullCase := IIPRequest{
+		typeOfInvestment: "",
+		component:        "",
+		frequency:        "",
+		year:             "",
+		returnFormat:     "",
+	}
+
+	if nullCase.ReturnFormat() != "" {
+		t.Error("Test Failed returnFormat should be null")
+	}
+
+	nonNullCase := IIPRequest{
+		typeOfInvestment: "",
+		component:        "",
+		frequency:        "",
+		year:             "",
+		returnFormat:     "XML",
+	}
+
+	if nonNullCase.ReturnFormat() != "XML" {
+		t.Error("Test Failed Return Format should be set to XML")
+	}
+
+}
+
+func TestIIPRequest_SetComponent(t *testing.T) {
+	nullCase := IIPRequest{
+		typeOfInvestment: "",
+		component:        "",
+		frequency:        "",
+		year:             "",
+		returnFormat:     "",
+	}
+	nullCase.SetComponent("JSON")
+	if nullCase.Component() != "JSON" {
+		t.Error("Test Failed Component should be set to JSON")
+	}
+}
+
+func TestIIPRequest_SetFrequency(t *testing.T) {
+	nullCase := IIPRequest{
+		typeOfInvestment: "",
+		component:        "",
+		frequency:        "",
+		year:             "",
+		returnFormat:     "",
+	}
+	nullCase.SetFrequency("infrequent")
+	if nullCase.Frequency() != "infrequent" {
+		t.Error("Test Failed Frequency should be set to infrequent")
+	}
+
+}
+
+func TestIIPRequest_SetReturnFormat(t *testing.T) {
+	nullCase := IIPRequest{
+		typeOfInvestment: "",
+		component:        "",
+		frequency:        "",
+		year:             "",
+		returnFormat:     "",
+	}
+	nullCase.SetReturnFormat("JSON")
+	if nullCase.ReturnFormat() != "JSON" {
+		t.Error("Test Failed return format should be set to JSON")
+	}
+}
+
+func TestIIPRequest_SetYear(t *testing.T) {
+	nullCase := IIPRequest{
+		typeOfInvestment: "",
+		component:        "",
+		frequency:        "",
+		year:             "",
+		returnFormat:     "",
+	}
+	nullCase.SetYear("2012")
+	if nullCase.Year() != "2012" {
+		t.Error("Test Failed Year should be set to 2012")
+	}
+}
+
+func TestIIPRequest_SetTypeOfInvestment(t *testing.T) {
+	nullCase := IIPRequest{
+		typeOfInvestment: "",
+		component:        "",
+		frequency:        "",
+		year:             "",
+		returnFormat:     "",
+	}
+	nullCase.SetTypeOfInvestment("bad")
+	if nullCase.TypeOfInvestment() != "bad" {
+		t.Error("Test Failed type of investment should be bad")
+	}
+}
+
+func TestIIPRequest_String(t *testing.T) {
+	nullCase := IIPRequest{
+		typeOfInvestment: "bad",
+		component:        "multiple",
+		frequency:        "not",
+		year:             "2012",
+		returnFormat:     "JSON",
+	}
+	if nullCase.String() != "multiple bad not 2012 JSON" {
+
+	}
 }

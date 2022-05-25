@@ -49,5 +49,5 @@ func (I *IIPRequest) SetYear(year string) {
 }
 
 func (I *IIPRequest) String() string {
-	return I.component + " " + I.typeOfInvestment + " " + I.frequency + " " + I.year
+	return I.component + " " + I.typeOfInvestment + " " + I.frequency + " " + I.year + " " + I.returnFormat
 }

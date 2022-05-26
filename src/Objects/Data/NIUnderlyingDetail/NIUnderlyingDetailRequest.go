@@ -7,10 +7,12 @@ type NIUnderlyingDetailRequest struct {
 	requestType string
 }
 
+//RequestType is a setter for an NIUnderlyingDetailRequest
 func (N *NIUnderlyingDetailRequest) RequestType() string {
 	return N.requestType
 }
 
+//SetRequestType is a getter for an NIUnderlyingDetailRequest
 func (N *NIUnderlyingDetailRequest) SetRequestType(requestType string) {
 	N.requestType = requestType
 }

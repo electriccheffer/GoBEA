@@ -100,5 +100,5 @@ func (M *MNERequest) SetRequestType(requestType string) {
 
 //String is a method which returns a string of the MNERequest
 func (M *MNERequest) String() string {
-	return M.directionOfInvestment + " " + strconv.Itoa(M.seriesId) + " " + M.classification + " " + M.year + " " + M.country + " " + M.industry + " " + M.getFootnotes + " " + M.requestType + " " + M.requestType
+	return M.directionOfInvestment + " " + strconv.Itoa(M.seriesId) + " " + M.classification + " " + M.year + " " + M.country + " " + M.industry + " " + M.getFootnotes + " " + M.requestType
 }

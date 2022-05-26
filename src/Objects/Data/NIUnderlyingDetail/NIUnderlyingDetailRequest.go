@@ -1,9 +1,18 @@
-package NIUnderlyingDetail
+package NIUnderlyingDetailRequest
 
 type NIUnderlyingDetailRequest struct {
-	tableName string
-	frequency string
-	year      string
+	tableName   string
+	frequency   string
+	year        string
+	requestType string
+}
+
+func (N *NIUnderlyingDetailRequest) RequestType() string {
+	return N.requestType
+}
+
+func (N *NIUnderlyingDetailRequest) SetRequestType(requestType string) {
+	N.requestType = requestType
 }
 
 //TableName is a getter for an NIUnderlyingDetailRequest

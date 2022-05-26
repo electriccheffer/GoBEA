@@ -7,6 +7,11 @@ type NIUnderlyingDetailRequest struct {
 	requestType string
 }
 
+//NewNIUnderlyingDetailRequest is a constuctor for anNIUnderlyingDetailRequest
+func NewNIUnderlyingDetailRequest(tableName string, frequency string, year string, requestType string) *NIUnderlyingDetailRequest {
+	return &NIUnderlyingDetailRequest{tableName: tableName, frequency: frequency, year: year, requestType: requestType}
+}
+
 //RequestType is a setter for an NIUnderlyingDetailRequest
 func (N *NIUnderlyingDetailRequest) RequestType() string {
 	return N.requestType
@@ -45,11 +50,6 @@ func (N *NIUnderlyingDetailRequest) Year() string {
 //SetYear is a setter for an NIUnderlyingDetailRequest
 func (N *NIUnderlyingDetailRequest) SetYear(year string) {
 	N.year = year
-}
-
-//NewNIUnderlyingDetailRequest is a constuctor for anNIUnderlyingDetailRequest
-func NewNIUnderlyingDetailRequest(tableName string, frequency string, year string) *NIUnderlyingDetailRequest {
-	return &NIUnderlyingDetailRequest{tableName: tableName, frequency: frequency, year: year}
 }
 
 //String is a method to return a string version of an NewNIUnderlyingDetailRequest

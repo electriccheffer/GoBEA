@@ -166,3 +166,16 @@ func TestNIUnderlyingDetailRequest_String(t *testing.T) {
 		t.Error("Test failed string ouput should be: Tayne frequent 2012")
 	}
 }
+
+func TestNewNIUnderlyingDetailRequest(t *testing.T) {
+	constructCase := NewNIUnderlyingDetailRequest("Tayne", "regular", "2012", "JSON")
+	if constructCase.Year() != "2012" {
+		t.Error("Test failed constructCase year should be 2012")
+	}
+	if constructCase.RequestType() != "JSON" {
+		t.Error("Test failed constructCase request type should be JSON ")
+	}
+	if constructCase.TableName() != "Tayne" {
+		t.Error("Test failed constructCase tableName should be Tayne")
+	}
+}

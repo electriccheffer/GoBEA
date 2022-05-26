@@ -33,3 +33,7 @@ func (f *FixedAssetsRequest) SetRequestType(requestType string) {
 func NewFixedAssetsRequest(tableName string, year string, requestType string) *FixedAssetsRequest {
 	return &FixedAssetsRequest{tableName: tableName, year: year, requestType: requestType}
 }
+
+func (f *FixedAssetsRequest) String() string {
+	return f.tableName + " " + f.year + " " + f.requestType
+}

@@ -7,7 +7,7 @@ type NIUnderlyingDetailRequest struct {
 	requestType string
 }
 
-//NewNIUnderlyingDetailRequest is a constuctor for anNIUnderlyingDetailRequest
+//NewNIUnderlyingDetailRequest a constuctor for anNIUnderlyingDetailRequest
 func NewNIUnderlyingDetailRequest(tableName string, frequency string, year string, requestType string) *NIUnderlyingDetailRequest {
 	return &NIUnderlyingDetailRequest{tableName: tableName, frequency: frequency, year: year, requestType: requestType}
 }

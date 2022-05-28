@@ -51,3 +51,7 @@ func (I *ITA) SetRequestType(requestType string) {
 func NewITA(indicator string, areaOrCountry string, frequency string, year string, requestType string) *ITA {
 	return &ITA{indicator: indicator, areaOrCountry: areaOrCountry, frequency: frequency, year: year, requestType: requestType}
 }
+
+func (I *ITA) String() string {
+	return I.indicator + " " + I.areaOrCountry + " " + I.frequency + " " + I.year + " " + I.requestType
+}

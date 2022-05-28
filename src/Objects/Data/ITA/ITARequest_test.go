@@ -222,13 +222,8 @@ func TestITA_String(t *testing.T) {
 }
 
 func TestNewITA(t *testing.T) {
-	constructorCase := ITA{
-		indicator:     "positive",
-		areaOrCountry: "usa",
-		frequency:     "moderate",
-		year:          "2012",
-		requestType:   "JSON",
-	}
+
+	constructorCase := NewITA("positive", "usa", "moderate", "2012", "JSON")
 	if constructorCase.Indicator() != "positive" && constructorCase.AreaOrCountry() != "usa" && constructorCase.Frequency() != "moderate" && constructorCase.Year() != "2012" && constructorCase.RequestType() != "JSON" {
 		t.Error("Test failed for constructor case.")
 	}

@@ -1,6 +1,9 @@
 package InputOutput
 
-import "strconv"
+import (
+	"BEALIb/src/Objects/Data/RequestInterface"
+	"strconv"
+)
 
 //InputOutputDataReq is a type struct which embodies all the required fields
 //	of a request made for Input/Output data
@@ -8,6 +11,7 @@ type InputOutputDataReq struct {
 	tableId      int
 	years        []string
 	returnFormat string
+	RequestInterface.Request
 }
 
 //ReturnFormat provides a method for returning the value of the returnFormat
@@ -59,7 +63,7 @@ func (r *InputOutputDataReq) setTableId(id int) {
 
 //toString provides a method for returning the InputOutputDataReq struct as a
 //string in the format of a BEA request
-func (r InputOutputDataReq) toString() (string, int) {
+func (r *InputOutputDataReq) toString() (string, int) {
 
 	var returnYears string
 	for _, year := range r.years {

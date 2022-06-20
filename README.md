@@ -6,3 +6,9 @@ data driven applications for visualizing economic data and perform calculations 
 the dependency headaches associated with Statistical Programs (R, Wolfram, etc.)
 
 This is a hobby project, so be nice.  
+
+
+# Status 
+I'm currently moving all objects for requests to one file GoBea.go and GoBea_test.go and making sure they still work.  
+After completing this I'm going to define a request interface, and implement this interface across the various objects 
+created to request data.  Reference the branch Defining_The_Interface branch. 

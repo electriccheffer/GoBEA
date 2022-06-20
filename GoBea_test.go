@@ -1,5 +1,4 @@
-package src
-package FixedAssets
+package GoBea
 
 import "testing"
 
@@ -136,9 +135,6 @@ func TestNewFixedAssetsRequest(t *testing.T) {
 	}
 
 }
-package GDPByIndustry
-
-import "testing"
 
 func TestGDPByIndustry_Frequency(t *testing.T) {
 	nullCase := GDPByIndustry{
@@ -315,9 +311,6 @@ func TestNewGDPByIndustry(t *testing.T) {
 		t.Error("Test failed industry should be set to manufacturing")
 	}
 }
-package InternationalInvestmentPosition
-
-import "testing"
 
 func TestIIPRequest_Year(t *testing.T) {
 
@@ -532,9 +525,6 @@ func TestIIPRequest_String(t *testing.T) {
 
 	}
 }
-package IntlServTrade
-
-import "testing"
 
 func TestIntlServTradeRequest_Affiliation(t *testing.T) {
 
@@ -707,9 +697,6 @@ func TestIntlServTradeRequest_toString(t *testing.T) {
 	}
 
 }
-package ITA
-
-import "testing"
 
 func TestITA_RequestType(t *testing.T) {
 	nullCase := ITA{
@@ -937,9 +924,6 @@ func TestNewITA(t *testing.T) {
 		t.Error("Test failed for constructor case.")
 	}
 }
-package MNE
-
-import "testing"
 
 func TestMNERequest_Classification(t *testing.T) {
 	nullCase := MNERequest{
@@ -1395,11 +1379,6 @@ func TestNewMNERequest(t *testing.T) {
 		t.Error("Test failed for request type")
 	}
 }
-package NIPA
-
-import (
-	"testing"
-)
 
 func TestNIPADataRequest_Frequency(t *testing.T) {
 
@@ -1580,9 +1559,6 @@ func TestNIPADataRequest_toString(t *testing.T) {
 		t.Error("nonNullCase toString()")
 	}
 }
-package NIUnderlyingDetailRequest
-
-import "testing"
 
 func TestNIUnderlyingDetailRequest_Frequency(t *testing.T) {
 	nullCase := NIUnderlyingDetailRequest{
@@ -1761,9 +1737,6 @@ func TestNewNIUnderlyingDetailRequest(t *testing.T) {
 		t.Error("Test failed constructCase tableName should be Tayne")
 	}
 }
-package Regional
-
-import "testing"
 
 func TestRegionalRequestRequest_TableName(t *testing.T) {
 	nullCase := Regional{
@@ -1942,9 +1915,6 @@ func TestRegionalRequest_toString(t *testing.T) {
 		t.Error("nonNullCase toString")
 	}
 }
-package UnderlyingGDPPerIndustry
-
-import "testing"
 
 func TestUnderLyingGDPPerIndustry_TableId(t *testing.T) {
 	nullCase := UnderLyingGDPPerIndustryRequest{

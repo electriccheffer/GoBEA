@@ -1,13 +1,6 @@
-package src
+package GoBea
 
-import (
-	"BEALIb/src/Objects/Data/RequestInterface"
-	"strconv"
-)
-
-type Request interface {
-	DataRequest() string
-}
+import "strconv"
 
 type FixedAssetsRequest struct {
 	tableName   string
@@ -186,7 +179,6 @@ type InputOutputDataReq struct {
 	tableId      int
 	years        []string
 	returnFormat string
-	RequestInterface.Request
 }
 
 //ReturnFormat provides a method for returning the value of the returnFormat
@@ -300,58 +292,6 @@ func (I *IIPRequest) SetYear(year string) {
 
 func (I *IIPRequest) String() string {
 	return I.component + " " + I.typeOfInvestment + " " + I.frequency + " " + I.year + " " + I.returnFormat
-}
-
-type IntlServTradeRequest struct {
-	typeOfService  string
-	tradeDirection string
-	affiliation    string
-	areaOrCountry  string
-}
-
-//TypeOfService is a method used to access the typeOfService field of a IntlServTradeRequest object
-func (i *IntlServTradeRequest) TypeOfService() string {
-	return i.typeOfService
-}
-
-//SetTypeOfService is a method used to set the typeOfService field of the IntlServTradeRequest object
-func (i *IntlServTradeRequest) SetTypeOfService(typeOfService string) {
-	i.typeOfService = typeOfService
-}
-
-//TradeDirection is a method used to access the tradeDirection field of IntlServTradeRequest object
-func (i *IntlServTradeRequest) TradeDirection() string {
-	return i.tradeDirection
-}
-
-//SetTradeDirection is a method used to set the tradeDirection field of the IntlServTradeRequest object
-func (i *IntlServTradeRequest) SetTradeDirection(tradeDirection string) {
-	i.tradeDirection = tradeDirection
-}
-
-//Affiliation is a method used to access the affiliation field of the IntlServTradeRequest object
-func (i *IntlServTradeRequest) Affiliation() string {
-	return i.affiliation
-}
-
-//SetAffiliation is a method used to set the affiliation field in the IntlServTradeRequest object
-func (i *IntlServTradeRequest) SetAffiliation(affiliation string) {
-	i.affiliation = affiliation
-}
-
-//AreaOrCountry is a method used to access the areaOrCountry field in the IntlServTradeRequest object
-func (i *IntlServTradeRequest) AreaOrCountry() string {
-	return i.areaOrCountry
-}
-
-//SetAreaOrCountry is a method used to set the areaOrCountry field in the IntlServTradeRequest object
-func (i *IntlServTradeRequest) SetAreaOrCountry(areaOrCountry string) {
-	i.areaOrCountry = areaOrCountry
-}
-
-//toString returns a string representation of the IntlServTradeRequest object
-func (i *IntlServTradeRequest) toString() string {
-	return i.TypeOfService() + " " + i.TradeDirection() + " " + i.Affiliation() + " " + i.AreaOrCountry()
 }
 
 type IntlServTradeRequest struct {
@@ -578,7 +518,7 @@ type NIUnderlyingDetailRequest struct {
 	requestType string
 }
 
-//NewNIUnderlyingDetailRequest a constuctor for anNIUnderlyingDetailRequest
+//NewNIUnderlyingDetailRequest a constructor for anNIUnderlyingDetailRequest
 func NewNIUnderlyingDetailRequest(tableName string, frequency string, year string, requestType string) *NIUnderlyingDetailRequest {
 	return &NIUnderlyingDetailRequest{tableName: tableName, frequency: frequency, year: year, requestType: requestType}
 }

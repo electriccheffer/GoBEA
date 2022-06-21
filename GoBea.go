@@ -1,6 +1,14 @@
 package GoBea
 
-import "strconv"
+import (
+	"strconv"
+)
+
+const apiAddress = "https://apps.bea.gov/api/data/?&UserID=D27C93B3-297B-4BA6-826C-25D85653E54D&method=GetData&DataSetName="
+
+type Request interface {
+	Request() string
+}
 
 type FixedAssetsRequest struct {
 	tableName   string
@@ -46,6 +54,10 @@ func NewFixedAssetsRequest(tableName string, year string, requestType string) *F
 //String is a method which returns a string of the FixedAssetsRequest
 func (f *FixedAssetsRequest) String() string {
 	return f.tableName + " " + f.year + " " + f.requestType
+}
+
+func (f *FixedAssetsRequest) Request() string {
+	return apiAddress + "FixedAssets&" + "TableName=" + f.tableName + "&Year=" + f.year + "&ResultFormat=" + f.requestType
 }
 
 type ITA struct {
@@ -116,11 +128,26 @@ func (I *ITA) String() string {
 	return I.indicator + " " + I.areaOrCountry + " " + I.frequency + " " + I.year + " " + I.requestType
 }
 
+func (I *ITA) Request() string {
+	return apiAddress + "ITA&Indicator=" + I.indicator + "&AreaOrCountry=" + I.areaOrCountry + "&Frequency=" + I.frequency + "&Year=" + I.year + "&ResultFormat=" + I.requestType
+}
+
 type GDPByIndustry struct {
-	tableId   int
-	frequency string
-	year      int
-	industry  string
+	tableId     int
+	frequency   string
+	year        int
+	industry    string
+	requestType string
+}
+
+//TODO test requestType field getters and setters
+
+func (G *GDPByIndustry) RequestType() string {
+	return G.requestType
+}
+
+func (G *GDPByIndustry) SetRequestType(requestType string) {
+	G.requestType = requestType
 }
 
 //TableId is a getter for the tableId field of a GDPByIndustry object
@@ -171,6 +198,10 @@ func NewGDPByIndustry(tableId int, frequency string, year int, industry string) 
 //String is a method which returns a string representation of a GDPByIndustry object
 func (G *GDPByIndustry) String() string {
 	return strconv.Itoa(G.tableId) + " " + G.frequency + " " + strconv.Itoa(G.year) + " " + G.industry
+}
+
+func (G *GDPByIndustry) Request() string {
+	return apiAddress + "&DataSetName=GDPbyIndustry&Year=" + strconv.Itoa(G.year) + "&Industry=" + G.industry + "&tableID=" + strconv.Itoa(G.tableId) + "&Frequency=" + G.frequency + "&ResultFormat=" + G.requestType
 }
 
 //InputOutputDataReq is a type struct which embodies all the required fields
@@ -242,6 +273,12 @@ func (r *InputOutputDataReq) toString() (string, int) {
 
 }
 
+//TODO: create a comma separated list of string values for years
+func (r *InputOutputDataReq) Request() string {
+
+	return apiAddress + "InputOutput" + "&Year=" + "&tableID=" + strconv.Itoa(r.tableId) + "&ResultFormat=" + r.returnFormat
+}
+
 type IIPRequest struct {
 	typeOfInvestment string
 	component        string
@@ -292,6 +329,10 @@ func (I *IIPRequest) SetYear(year string) {
 
 func (I *IIPRequest) String() string {
 	return I.component + " " + I.typeOfInvestment + " " + I.frequency + " " + I.year + " " + I.returnFormat
+}
+
+func (I *IIPRequest) Request() string {
+	return apiAddress + "IIP" + "&TypeOfInvestment=" + I.typeOfInvestment + "&Component=" + I.component + "&Frequency=" + I.frequency + "&Year=" + I.year + "&RequestFormat=" + I.returnFormat
 }
 
 type IntlServTradeRequest struct {

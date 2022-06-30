@@ -1,6 +1,160 @@
 package GoBea
 
-import "testing"
+import (
+	"testing"
+)
+
+//TODO: Review GDPPerIndustryRequest tests
+//TODO: Review NIPADataRequest tests
+//TODO: Review RegionalRequest tests
+//TODO: Review UnderlyingGDPPerIndustryRequest tests
+
+func TestInputOutputDataReq_Years(t *testing.T) {
+	nullCase := InputOutputDataReq{
+		tableId:      0,
+		years:        "",
+		returnFormat: "",
+	}
+	if nullCase.Years() != "" {
+		t.Error("Test failed years != nil")
+	}
+	nonNullCase := InputOutputDataReq{
+		tableId:      0,
+		years:        "2012",
+		returnFormat: "",
+	}
+	if nonNullCase.Years() != "2012" {
+		t.Error("Test failed years != 2012")
+	}
+
+}
+
+func TestInputOutputDataReq_TableId(t *testing.T) {
+	nullCase := InputOutputDataReq{
+		tableId:      0,
+		years:        "",
+		returnFormat: "",
+	}
+	if nullCase.TableId() != 0 {
+		t.Error("Test failed tableId != 0")
+	}
+	nonNullCase := InputOutputDataReq{
+		tableId:      1,
+		years:        "",
+		returnFormat: "",
+	}
+	if nonNullCase.TableId() != 1 {
+		t.Error("Test failed tableId != 1")
+	}
+}
+
+func TestInputOutputDataReq_ReturnFormat(t *testing.T) {
+	nullCase := InputOutputDataReq{
+		tableId:      0,
+		years:        "",
+		returnFormat: "",
+	}
+	if nullCase.ReturnFormat() != "" {
+		t.Error("Test failed returnFormat != nil")
+	}
+	nonNullCase := InputOutputDataReq{
+		tableId:      0,
+		years:        "",
+		returnFormat: "JSON",
+	}
+	if nonNullCase.ReturnFormat() != "JSON" {
+		t.Error("Test failed returnFormat != JSON")
+	}
+}
+
+func TestInputOutputDataReq_AddYear(t *testing.T) {
+	nullCase := InputOutputDataReq{
+		tableId:      0,
+		years:        "",
+		returnFormat: "",
+	}
+	if nullCase.Years() != "" {
+		t.Error("Test failed years != nil")
+	}
+	nullCase.AddYear("2012")
+	if nullCase.Years() != "2012" {
+		t.Error("Test failed years != 2012")
+	}
+	nullCase.AddYear("2013")
+	if nullCase.Years() != "2012,2013" {
+		t.Error("Test failed years != 2012,2013")
+	}
+}
+
+func TestInputOutputDataReq_SetReturnFormat(t *testing.T) {
+	nullCase := InputOutputDataReq{
+		tableId:      0,
+		years:        "",
+		returnFormat: "",
+	}
+	if nullCase.ReturnFormat() != "" {
+		t.Error("Test failed returnFormat != nil")
+	}
+	nullCase.SetReturnFormat("XML")
+	if nullCase.ReturnFormat() != "XML" {
+		t.Error("Test failed returnFormat != XML")
+	}
+}
+
+func TestInputOutputDataReq_SetYears(t *testing.T) {
+	nullCase := InputOutputDataReq{
+		tableId:      0,
+		years:        "",
+		returnFormat: "",
+	}
+	if nullCase.Years() != "" {
+		t.Error("Test failed years != nil")
+	}
+	nullCase.SetYears("2012")
+	if nullCase.Years() != "2012" {
+		t.Error("Test failed years != 2012")
+	}
+
+}
+
+func TestInputOutputDataReq_SetTableId(t *testing.T) {
+	nullCase := InputOutputDataReq{
+		tableId:      0,
+		years:        "",
+		returnFormat: "",
+	}
+	if nullCase.TableId() != 0 {
+		t.Error("Test failed tableId != 0")
+	}
+	nullCase.SetTableId(1)
+	if nullCase.TableId() != 1 {
+		t.Error("Test failed tableId != 1")
+	}
+}
+
+func TestInputOutputDataReq_String(t *testing.T) {
+	nonNullCase := InputOutputDataReq{
+		tableId:      1,
+		years:        "2012",
+		returnFormat: "XML",
+	}
+	if nonNullCase.String() != "1 2012 XML" {
+		t.Error("Test failed String != 1 2012 XML")
+	}
+}
+
+func TestNewInputOutputDataReq(t *testing.T) {
+	newCase := NewInputOutputDataReq(1, "2012,2013", "JSON")
+	if newCase.TableId() != 1 {
+		t.Error("Test failed tableId != 1")
+	}
+	if newCase.Years() != "2012,2013" {
+		t.Error("Test failed years != 2012,2013")
+	}
+	if newCase.ReturnFormat() != "JSON" {
+		t.Error("Test failed returnFormat != JSON")
+	}
+}
 
 func TestFixedAssetsRequest_Year(t *testing.T) {
 	nullCase := FixedAssetsRequest{
@@ -138,19 +292,21 @@ func TestNewFixedAssetsRequest(t *testing.T) {
 
 func TestGDPByIndustry_Frequency(t *testing.T) {
 	nullCase := GDPByIndustry{
-		tableId:   0,
-		frequency: "",
-		year:      0,
-		industry:  "",
+		tableId:     0,
+		frequency:   "",
+		year:        "",
+		industry:    "",
+		requestType: "",
 	}
 	if nullCase.Frequency() != "" {
 		t.Error("Test failed nullCase frequency should be set to null")
 	}
 	nonNullCase := GDPByIndustry{
-		tableId:   0,
-		frequency: "regular",
-		year:      0,
-		industry:  "",
+		tableId:     0,
+		frequency:   "regular",
+		year:        "",
+		industry:    "",
+		requestType: "",
 	}
 	if nonNullCase.Frequency() != "regular" {
 		t.Error("Test failed nonNullCase frequency should be set to regular")
@@ -159,40 +315,85 @@ func TestGDPByIndustry_Frequency(t *testing.T) {
 
 func TestGDPByIndustry_Year(t *testing.T) {
 	nullCase := GDPByIndustry{
-		tableId:   0,
-		frequency: "",
-		year:      0,
-		industry:  "",
+		tableId:     0,
+		frequency:   "",
+		year:        "",
+		industry:    "",
+		requestType: "",
 	}
-	if nullCase.Year() != 0 {
+	if nullCase.Year() != "" {
 		t.Error("Test failed null case year should be set to 0")
 	}
 	nonNullCase := GDPByIndustry{
-		tableId:   0,
-		frequency: "",
-		year:      2012,
-		industry:  "",
+		tableId:     0,
+		frequency:   "",
+		year:        "2012",
+		industry:    "",
+		requestType: "",
 	}
-	if nonNullCase.Year() != 2012 {
+	if nonNullCase.Year() != "2012" {
 		t.Error("Test failed nonNullCase year should be set to 2012 ")
+	}
+}
+
+func TestGDPByIndustry_RequestType(t *testing.T) {
+	nullCase := GDPByIndustry{
+		tableId:     0,
+		frequency:   "",
+		year:        "",
+		industry:    "",
+		requestType: "",
+	}
+	if nullCase.requestType != "" {
+		t.Error("Test failed nullCase should be null")
+	}
+	nonNullCase := GDPByIndustry{
+		tableId:     0,
+		frequency:   "",
+		year:        "",
+		industry:    "",
+		requestType: "XML",
+	}
+	if nonNullCase.requestType != "XML" {
+		t.Error("Test failed nonNullCase should be XML.")
+	}
+
+}
+
+func TestGDPByIndustry_SetRequestType(t *testing.T) {
+	nullCase := GDPByIndustry{
+		tableId:     0,
+		frequency:   "",
+		year:        "",
+		industry:    "",
+		requestType: "",
+	}
+	if nullCase.requestType != "" {
+		t.Error("Test failed null case should be null")
+	}
+	nullCase.SetRequestType("JSON")
+	if nullCase.RequestType() != "JSON" {
+		t.Error("Test failed requestType should be JSON")
 	}
 }
 
 func TestGDPByIndustry_Industry(t *testing.T) {
 	nullCase := GDPByIndustry{
-		tableId:   0,
-		frequency: "",
-		year:      0,
-		industry:  "",
+		tableId:     0,
+		frequency:   "",
+		year:        "",
+		industry:    "",
+		requestType: "",
 	}
 	if nullCase.Industry() != "" {
 		t.Error("Test failed nullCase industry should be set to null")
 	}
 	nonNullCase := GDPByIndustry{
-		tableId:   0,
-		frequency: "",
-		year:      0,
-		industry:  "manufacturing",
+		tableId:     0,
+		frequency:   "",
+		year:        "",
+		industry:    "manufacturing",
+		requestType: "",
 	}
 	if nonNullCase.Industry() != "manufacturing" {
 		t.Error("Test failed nonNullCase industry should be set to manufacturing")
@@ -201,19 +402,21 @@ func TestGDPByIndustry_Industry(t *testing.T) {
 
 func TestGDPByIndustry_TableId(t *testing.T) {
 	nullCase := GDPByIndustry{
-		tableId:   0,
-		frequency: "",
-		year:      0,
-		industry:  "",
+		tableId:     0,
+		frequency:   "",
+		year:        "",
+		industry:    "",
+		requestType: "",
 	}
 	if nullCase.TableId() != 0 {
 		t.Error("Test failed nullCase should be set to 0")
 	}
 	nonNullCase := GDPByIndustry{
-		tableId:   12,
-		frequency: "",
-		year:      0,
-		industry:  "",
+		tableId:     12,
+		frequency:   "",
+		year:        "",
+		industry:    "",
+		requestType: "",
 	}
 	if nonNullCase.TableId() != 12 {
 		t.Error("Test failed nonNullCase tableId should be set to 12")
@@ -222,10 +425,11 @@ func TestGDPByIndustry_TableId(t *testing.T) {
 
 func TestGDPByIndustry_SetFrequency(t *testing.T) {
 	nullCase := GDPByIndustry{
-		tableId:   0,
-		frequency: "",
-		year:      0,
-		industry:  "",
+		tableId:     0,
+		frequency:   "",
+		year:        "",
+		industry:    "",
+		requestType: "",
 	}
 	if nullCase.Frequency() != "" {
 		t.Error("Test failed nullCase should be set to null")
@@ -238,10 +442,11 @@ func TestGDPByIndustry_SetFrequency(t *testing.T) {
 
 func TestGDPByIndustry_SetIndustry(t *testing.T) {
 	nullCase := GDPByIndustry{
-		tableId:   0,
-		frequency: "",
-		year:      0,
-		industry:  "",
+		tableId:     0,
+		frequency:   "",
+		year:        "",
+		industry:    "",
+		requestType: "",
 	}
 	if nullCase.Industry() != "" {
 		t.Error("Test failed nullCase should be null")
@@ -254,10 +459,11 @@ func TestGDPByIndustry_SetIndustry(t *testing.T) {
 
 func TestGDPByIndustry_SetTableId(t *testing.T) {
 	nullCase := GDPByIndustry{
-		tableId:   0,
-		frequency: "",
-		year:      0,
-		industry:  "",
+		tableId:     0,
+		frequency:   "",
+		year:        "",
+		industry:    "",
+		requestType: "",
 	}
 	if nullCase.TableId() != 0 {
 		t.Error("Test failed null case tableId should be set to 0")
@@ -270,45 +476,50 @@ func TestGDPByIndustry_SetTableId(t *testing.T) {
 
 func TestGDPByIndustry_SetYear(t *testing.T) {
 	nullCase := GDPByIndustry{
-		tableId:   0,
-		frequency: "",
-		year:      0,
-		industry:  "",
+		tableId:     0,
+		frequency:   "",
+		year:        "",
+		industry:    "",
+		requestType: "",
 	}
-	if nullCase.Year() != 0 {
+	if nullCase.Year() != "" {
 		t.Error("Test failed null case year field should be set to 0")
 	}
-	nullCase.SetYear(2012)
-	if nullCase.Year() != 2012 {
+	nullCase.SetYear("2012")
+	if nullCase.Year() != "2012" {
 		t.Error("Test failed null case year field should be set to 2012")
 	}
 }
 
 func TestGDPByIndustry_String(t *testing.T) {
 	stringCase := GDPByIndustry{
-		tableId:   1,
-		frequency: "regular",
-		year:      2012,
-		industry:  "manufacturing",
+		tableId:     1,
+		frequency:   "regular",
+		year:        "2012",
+		industry:    "manufacturing",
+		requestType: "XML",
 	}
-	if stringCase.String() != "1 regular 2012 manufacturing" {
+	if stringCase.String() != "1 regular 2012 manufacturing XML" {
 		t.Error("Test failed string should read 1 regular 2012 manufacturing")
 	}
 }
 
 func TestNewGDPByIndustry(t *testing.T) {
-	newCase := NewGDPByIndustry(1, "regular", 2012, "manufacturing")
+	newCase := NewGDPByIndustry(1, "regular", "2012", "manufacturing", "XML")
 	if newCase.TableId() != 1 {
 		t.Error("Test failed tableId should be 1")
 	}
 	if newCase.Frequency() != "regular" {
 		t.Error("Test failed frequency should be set to regular")
 	}
-	if newCase.Year() != 2012 {
+	if newCase.Year() != "2012" {
 		t.Error("Test failed year should be set to 2012")
 	}
 	if newCase.Industry() != "manufacturing" {
 		t.Error("Test failed industry should be set to manufacturing")
+	}
+	if newCase.RequestType() != "XML" {
+		t.Error("Test failed requestType should be set to XML")
 	}
 }
 
@@ -533,6 +744,7 @@ func TestIntlServTradeRequest_Affiliation(t *testing.T) {
 		tradeDirection: "",
 		affiliation:    "",
 		areaOrCountry:  "",
+		requestType:    "",
 	}
 	if nullCase.Affiliation() != "" {
 		t.Error("nullCase.Affiliation() != ")
@@ -542,6 +754,7 @@ func TestIntlServTradeRequest_Affiliation(t *testing.T) {
 		tradeDirection: "",
 		affiliation:    "Regional",
 		areaOrCountry:  "",
+		requestType:    "",
 	}
 	if nonNullCase.Affiliation() != "Regional" {
 		t.Error("nullCase.Affiliation() != Regional")
@@ -569,6 +782,7 @@ func TestIntlServTradeRequest_AreaOrCountry(t *testing.T) {
 		tradeDirection: "",
 		affiliation:    "",
 		areaOrCountry:  "",
+		requestType:    "",
 	}
 	if nullCase.AreaOrCountry() != "" {
 		t.Error("nullCase.AreaOrCountry() != \"\"")
@@ -579,6 +793,7 @@ func TestIntlServTradeRequest_AreaOrCountry(t *testing.T) {
 		tradeDirection: "",
 		affiliation:    "",
 		areaOrCountry:  "south-east",
+		requestType:    "",
 	}
 
 	if nonNullCase.AreaOrCountry() != "south-east" {
@@ -593,6 +808,7 @@ func TestIntlServTradeRequest_SetAreaOrCountry(t *testing.T) {
 		tradeDirection: "",
 		affiliation:    "",
 		areaOrCountry:  "",
+		requestType:    "",
 	}
 	nullCase.SetAreaOrCountry("United States")
 	if nullCase.AreaOrCountry() != "United States" {
@@ -607,6 +823,7 @@ func TestIntlServTradeRequest_TradeDirection(t *testing.T) {
 		tradeDirection: "",
 		affiliation:    "",
 		areaOrCountry:  "",
+		requestType:    "",
 	}
 	if nullCase.TradeDirection() != "" {
 		t.Error("nullCase.TradeDirection() != \"\"")
@@ -616,6 +833,7 @@ func TestIntlServTradeRequest_TradeDirection(t *testing.T) {
 		tradeDirection: "backwards",
 		affiliation:    "",
 		areaOrCountry:  "",
+		requestType:    "",
 	}
 	if nonNullCase.TradeDirection() != "backwards" {
 		t.Error("nonNullCase.TradeDirection() != \"backwards\"")
@@ -629,6 +847,7 @@ func TestIntlServTradeRequest_SetTradeDirection(t *testing.T) {
 		tradeDirection: "",
 		affiliation:    "",
 		areaOrCountry:  "",
+		requestType:    "",
 	}
 	nullCase.SetTradeDirection("thisway")
 	if nullCase.TradeDirection() != "thisway" {
@@ -643,6 +862,7 @@ func TestIntlServTradeRequest_TypeOfService(t *testing.T) {
 		tradeDirection: "",
 		affiliation:    "",
 		areaOrCountry:  "",
+		requestType:    "",
 	}
 	if nullCase.TypeOfService() != "" {
 		t.Error("nullCase.TypeOfService() != \"\"")
@@ -652,6 +872,7 @@ func TestIntlServTradeRequest_TypeOfService(t *testing.T) {
 		tradeDirection: "",
 		affiliation:    "",
 		areaOrCountry:  "",
+		requestType:    "",
 	}
 
 	if nonNullCase.TypeOfService() != "big" {
@@ -666,6 +887,7 @@ func TestIntlServTradeRequest_SetTypeOfService(t *testing.T) {
 		tradeDirection: "",
 		affiliation:    "",
 		areaOrCountry:  "",
+		requestType:    "",
 	}
 
 	nullCase.SetTypeOfService("good")
@@ -675,27 +897,88 @@ func TestIntlServTradeRequest_SetTypeOfService(t *testing.T) {
 
 }
 
-func TestIntlServTradeRequest_toString(t *testing.T) {
+func TestIntlServTradeRequest_String(t *testing.T) {
 	nullCase := IntlServTradeRequest{
 		typeOfService:  "",
 		tradeDirection: "",
 		affiliation:    "",
 		areaOrCountry:  "",
+		requestType:    "",
 	}
-	if nullCase.toString() != "   " {
-		t.Error("nullCase.toString() != \"   \"")
+	if nullCase.String() != "    " {
+		t.Error("nullCase.String() != \"   \"")
 	}
 	nonNullCase := IntlServTradeRequest{
 		typeOfService:  "good",
 		tradeDirection: "theOtherWay",
 		affiliation:    "notgood",
 		areaOrCountry:  "usa",
+		requestType:    "XML",
 	}
 
-	if nonNullCase.toString() != "good theOtherWay notgood usa" {
-		t.Error("nonNullCase.toString() != \"good theOtherWay notgood usa\"")
+	if nonNullCase.String() != "good theOtherWay notgood usa XML" {
+		t.Error("nonNullCase.String() != \"good theOtherWay notgood usa XML\"")
 	}
 
+}
+
+func TestNewIntlServTradeRequest(t *testing.T) {
+	newCase := NewIntlServTradeRequest("good", "backwards", "non", "USA", "XML")
+	if newCase.TypeOfService() != "good" {
+		t.Error("Test failed typeOfService != good")
+	}
+	if newCase.TradeDirection() != "backwards" {
+		t.Error("Test failed tradeDirection != backwards")
+	}
+	if newCase.Affiliation() != "non" {
+		t.Error("Test failed affiliation != non")
+	}
+	if newCase.AreaOrCountry() != "USA" {
+		t.Error("Test failed areaOrCountry != USA")
+	}
+	if newCase.RequestType() != "XML" {
+		t.Error("Test failed requestType != USA")
+	}
+}
+
+func TestIntlServTradeRequest_RequestType(t *testing.T) {
+	nullCase := IntlServTradeRequest{
+		typeOfService:  "",
+		tradeDirection: "",
+		affiliation:    "",
+		areaOrCountry:  "",
+		requestType:    "",
+	}
+	if nullCase.RequestType() != "" {
+		t.Error("Test failed request type != null")
+	}
+	nonNullCase := IntlServTradeRequest{
+		typeOfService:  "",
+		tradeDirection: "",
+		affiliation:    "",
+		areaOrCountry:  "",
+		requestType:    "XML",
+	}
+	if nonNullCase.RequestType() != "XML" {
+		t.Error("Test failed requestType != XML")
+	}
+}
+
+func TestIntlServTradeRequest_SetRequestType(t *testing.T) {
+	nullCase := IntlServTradeRequest{
+		typeOfService:  "",
+		tradeDirection: "",
+		affiliation:    "",
+		areaOrCountry:  "",
+		requestType:    "",
+	}
+	if nullCase.RequestType() != "" {
+		t.Error("Test failed requestType should be nil")
+	}
+	nullCase.SetRequestType("JSON")
+	if nullCase.RequestType() != "JSON" {
+		t.Error("Test failed requestType != JSON")
+	}
 }
 
 func TestITA_RequestType(t *testing.T) {
@@ -1380,49 +1663,51 @@ func TestNewMNERequest(t *testing.T) {
 	}
 }
 
+//TODO: test new methods and constructor for NIPADataRequest
 func TestNIPADataRequest_Frequency(t *testing.T) {
 
 	nullCase := NIPADataRequest{
-		tableId:   0,
-		frequency: nil,
-		years:     nil,
+		tableId:     0,
+		frequency:   "",
+		years:       "",
+		requestType: "",
 	}
 
-	if nullCase.Frequency() != nil {
-		t.Error("frequency != nill")
+	if nullCase.Frequency() != "" {
+		t.Error("frequency != nil")
 	}
 
 	nonNullCase := NIPADataRequest{
-		tableId:   0,
-		frequency: []string{"2003", "20"},
-		years:     nil,
+		tableId:     0,
+		frequency:   "2003,20",
+		years:       "",
+		requestType: "",
 	}
 
-	if nonNullCase.Frequency()[0] != "2003" {
-		t.Error("nonNullCase.frequency[0] != 2003")
-	}
-
-	if nonNullCase.Frequency()[1] != "20" {
-		t.Error("nonNullCase.frequency[1] != 20")
+	if nonNullCase.Frequency() != "2003,20" {
+		t.Error("nonNullCase.frequency != 2003,20")
 	}
 }
 
 func TestNIPADataRequest_TableId(t *testing.T) {
 
 	nullCase := NIPADataRequest{
-		tableId:   0,
-		frequency: nil,
-		years:     nil,
+		tableId:     0,
+		frequency:   "",
+		years:       "",
+		requestType: "",
 	}
 	if nullCase.TableId() != 0 {
 		t.Error("tableId != 0")
 	}
 
 	nonNullCase := NIPADataRequest{
-		tableId:   2,
-		frequency: nil,
-		years:     nil,
+		tableId:     2,
+		frequency:   "",
+		years:       "",
+		requestType: "",
 	}
+
 	if nonNullCase.TableId() != 2 {
 		t.Error("tableId != 2")
 	}
@@ -1431,135 +1716,187 @@ func TestNIPADataRequest_TableId(t *testing.T) {
 
 func TestNIPADataRequest_Years(t *testing.T) {
 	nullCase := NIPADataRequest{
-		tableId:   0,
-		frequency: nil,
-		years:     nil,
+		tableId:     0,
+		frequency:   "",
+		years:       "",
+		requestType: "",
 	}
-	if nullCase.Years() != nil {
-		t.Error("nullCase.years != nil")
+	if nullCase.Years() != "" {
+		t.Error("nullCase.years != empty")
 	}
 	nonNullCase := NIPADataRequest{
-		tableId:   0,
-		frequency: nil,
-		years:     []string{"2000", "2012"},
+		tableId:     0,
+		frequency:   "",
+		years:       "2000, 2012",
+		requestType: "",
 	}
-	if nonNullCase.Years()[0] != "2000" {
-		t.Error("nonNullCase.years[0] != 2000")
-	}
-	if nonNullCase.Years()[1] != "2012" {
-		t.Error("nonNullCase.years[1] != 2012")
+	if nonNullCase.Years() != "2000, 2012" {
+		t.Error("nonNullCase.years != 2000, 2012")
 	}
 
 }
 
-func TestNIPADataRequest_setYears(t *testing.T) {
+func TestNIPADataRequest_SetYears(t *testing.T) {
 	nullCase := NIPADataRequest{
-		tableId:   0,
-		frequency: nil,
-		years:     nil,
+		tableId:     0,
+		frequency:   "",
+		years:       "",
+		requestType: "",
 	}
-	nullCase.setYears([]string{"2000", "2012"})
-	if nullCase.Years()[0] != "2000" {
+	nullCase.SetYears("2000, 2012")
+	if nullCase.Years() != "2000, 2012" {
 		t.Error("nullCase.Years()[0] != 2000")
 	}
-	nullCase.setYears([]string{"1992", "1193"})
-	if nullCase.Years()[0] != "1992" {
-		t.Error("nullCase.Years()[0] != 1992")
-	}
-	if len(nullCase.Years()) != 2 {
-		t.Error("size of the array is incorrect")
+	nullCase.SetYears("1992, 1193")
+	if nullCase.Years() != "1992, 1193" {
+		t.Error("nullCase.Years() != 1992, 1193")
 	}
 
 }
 
-func TestNIPADataRequest_setFrequency(t *testing.T) {
+func TestNIPADataRequest_SetFrequency(t *testing.T) {
 	nullCase := NIPADataRequest{
-		tableId:   0,
-		frequency: nil,
-		years:     nil,
+		tableId:     0,
+		frequency:   "",
+		years:       "",
+		requestType: "",
 	}
-	nullCase.setFrequency([]string{"2012", "2000"})
-	if nullCase.Frequency()[0] != "2012" {
+	nullCase.SetFrequency("2012, 2000")
+
+	if nullCase.Frequency() != "2012, 2000" {
 		t.Error("nullCase.Frequency()[0] != 2012")
 	}
-	if nullCase.Frequency()[1] != "2000" {
-		t.Error("nullCase.Frequency()[1] != 2000")
-	}
-	nullCase.setFrequency([]string{"1999", "1998"})
-	if len(nullCase.Frequency()) != 2 {
-		t.Error("len(nullCase.Frequency()) != 2")
-	}
-	if nullCase.Frequency()[0] != "1999" {
-		t.Error("nullCase.Frequency()[0] != 1999")
+	nullCase.SetFrequency("1999, 1998")
+	if nullCase.Frequency() != "1999, 1998" {
+		t.Error("nullCase.Frequency() != 1999, 1998")
 	}
 }
 
-func TestNIPADataRequest_setTableId(t *testing.T) {
+func TestNIPADataRequest_SetTableId(t *testing.T) {
 	nullCase := NIPADataRequest{
-		tableId:   0,
-		frequency: nil,
-		years:     nil,
+		tableId:     0,
+		frequency:   "",
+		years:       "",
+		requestType: "",
 	}
-	nullCase.setTableId(12)
+
+	nullCase.SetTableId(12)
 	if nullCase.TableId() != 12 {
 		t.Error("nullCase.TableId() != 12")
 	}
 
 }
 
-func TestNIPADataRequest_addFrequency(t *testing.T) {
+func TestNIPADataRequest_AddFrequency(t *testing.T) {
 	nullCase := NIPADataRequest{
 		tableId:   0,
-		frequency: nil,
-		years:     nil,
+		frequency: "",
+		years:     "",
 	}
 
-	nullCase.addFrequency("2012")
-	if nullCase.Frequency()[0] != "2012" {
-		t.Error("nullCase.Frequency()[0] != 2012")
+	nullCase.AddFrequency("2012")
+	if nullCase.Frequency() != "2012" {
+		t.Error("nullCase.Frequency() != 2012")
 	}
-	nullCase.addFrequency("2013")
-	if nullCase.Frequency()[1] != "2013" {
-		t.Error("nullCase.Frequency()[1] != 2013")
-	}
-	if len(nullCase.Frequency()) != 2 {
-		t.Error("len(nullCase.Frequency()) != 2")
+	nullCase.AddFrequency("2013")
+	if nullCase.Frequency() != "2012,2013" {
+		t.Error("nullCase.Frequency() != 2012,2013")
 	}
 }
 
-func TestNIPADataRequest_addYear(t *testing.T) {
+func TestNIPADataRequest_AddYear(t *testing.T) {
 	nullCase := NIPADataRequest{
-		tableId:   0,
-		frequency: nil,
-		years:     nil,
+		tableId:     0,
+		frequency:   "",
+		years:       "",
+		requestType: "",
 	}
 
-	nullCase.addYear("210")
-	if nullCase.Years()[0] != "210" {
-		t.Error("nullCase.Years()[0] != 210")
+	nullCase.AddYear("210")
+	if nullCase.Years() != "210" {
+		t.Error("nullCase.Years() != 210")
 	}
-	nullCase.addYear("2000")
-	if nullCase.Years()[1] != "2000" {
-		t.Error("nullCase.Years()[1] != 2000")
-	}
-	if len(nullCase.Years()) != 2 {
-		t.Error("len(nullCase.Years()) != 2")
+	nullCase.AddYear("2000")
+	if nullCase.Years() != "210,2000" {
+		t.Error("nullCase.Years() != 210, 2000")
 	}
 
 }
 
-func TestNIPADataRequest_toString(t *testing.T) {
+func TestNIPADataRequest_RequestType(t *testing.T) {
+	nullCase := NIPADataRequest{
+		tableId:     0,
+		frequency:   "",
+		years:       "",
+		requestType: "",
+	}
+	if nullCase.RequestType() != "" {
+		t.Error("Test failed requestType != nil")
+	}
 	nonNullCase := NIPADataRequest{
-		tableId:   3,
-		frequency: []string{"2003", "2004"},
-		years:     []string{"122", "332"},
+		tableId:     0,
+		frequency:   "",
+		years:       "",
+		requestType: "JSON",
 	}
-
-	if nonNullCase.toString() != "3,2003 2004 ,122 332 " {
-		t.Error("nonNullCase toString()")
+	if nonNullCase.RequestType() != "JSON" {
+		t.Error("Test failed requestType != nil")
 	}
 }
 
+func TestNIPADataRequest_SetRequestType(t *testing.T) {
+	nullCase := NIPADataRequest{
+		tableId:     0,
+		frequency:   "",
+		years:       "",
+		requestType: "",
+	}
+	if nullCase.RequestType() != "" {
+		t.Error("Test failed requestType != nil")
+	}
+	nullCase.SetRequestType("JSON")
+	if nullCase.RequestType() != "JSON" {
+		t.Error("Test failed requestType != JSON")
+	}
+}
+
+func TestNIPADataRequest_String(t *testing.T) {
+	nonNullCase := NIPADataRequest{
+		tableId:     3,
+		frequency:   "2003,2004",
+		years:       "122,332",
+		requestType: "JSON",
+	}
+
+	if nonNullCase.String() != "3 2003,2004 122,332 JSON" {
+		t.Error("nonNullCase String()")
+	}
+}
+
+func TestNewNIPADataRequest(t *testing.T) {
+	newCase := NIPADataRequest{
+		tableId:     1,
+		frequency:   "good",
+		years:       "2012",
+		requestType: "JSON",
+	}
+
+	if newCase.TableId() != 1 {
+		t.Error("Test failed TableId != 1")
+	}
+
+	if newCase.Frequency() != "good" {
+		t.Error("Test failed Frequency != good")
+	}
+
+	if newCase.Years() != "2012" {
+		t.Error("Test failed Years != 2012")
+	}
+
+	if newCase.RequestType() != "JSON" {
+		t.Error("Test failed RequestType != JSON")
+	}
+}
 func TestNIUnderlyingDetailRequest_Frequency(t *testing.T) {
 	nullCase := NIUnderlyingDetailRequest{
 		tableName: "",
@@ -1738,8 +2075,9 @@ func TestNewNIUnderlyingDetailRequest(t *testing.T) {
 	}
 }
 
+//TODO: test new methods and constructor rewrite array of strings to string
 func TestRegionalRequestRequest_TableName(t *testing.T) {
-	nullCase := Regional{
+	nullCase := RegionalRequest{
 		tableName: "",
 		lineCode:  0,
 		geoFips:   "",
@@ -1749,7 +2087,7 @@ func TestRegionalRequestRequest_TableName(t *testing.T) {
 		t.Error("null case TableName")
 	}
 
-	nonNullCase := Regional{
+	nonNullCase := RegionalRequest{
 		tableName: "Table",
 		lineCode:  2,
 		geoFips:   "392",
@@ -1762,7 +2100,7 @@ func TestRegionalRequestRequest_TableName(t *testing.T) {
 }
 
 func TestRegionalRequestRequest_LineCode(t *testing.T) {
-	nullCase := Regional{
+	nullCase := RegionalRequest{
 		tableName: "",
 		lineCode:  0,
 		geoFips:   "",
@@ -1774,7 +2112,7 @@ func TestRegionalRequestRequest_LineCode(t *testing.T) {
 		t.Error("nullCase LineCode")
 
 	}
-	nonNullCase := Regional{
+	nonNullCase := RegionalRequest{
 		tableName: "name",
 		lineCode:  2,
 		geoFips:   "what is a fip",
@@ -1786,7 +2124,7 @@ func TestRegionalRequestRequest_LineCode(t *testing.T) {
 }
 
 func TestRegionalRequestRequest_GeoFips(t *testing.T) {
-	nullCase := Regional{
+	nullCase := RegionalRequest{
 		tableName: "",
 		lineCode:  0,
 		geoFips:   "",
@@ -1795,7 +2133,7 @@ func TestRegionalRequestRequest_GeoFips(t *testing.T) {
 	if nullCase.geoFips != "" {
 		t.Error("nullCase Geofips")
 	}
-	nonNullCase := Regional{
+	nonNullCase := RegionalRequest{
 		tableName: "table",
 		lineCode:  3,
 		geoFips:   "fils",
@@ -1808,7 +2146,7 @@ func TestRegionalRequestRequest_GeoFips(t *testing.T) {
 }
 
 func TestRegionalRequestRequest_Year(t *testing.T) {
-	nullCase := Regional{
+	nullCase := RegionalRequest{
 		tableName: "",
 		lineCode:  0,
 		geoFips:   "",
@@ -1817,7 +2155,7 @@ func TestRegionalRequestRequest_Year(t *testing.T) {
 	if nullCase.year != "" {
 		t.Error("nullCase Year")
 	}
-	nonNullCase := Regional{
+	nonNullCase := RegionalRequest{
 		tableName: "ryan",
 		lineCode:  3,
 		geoFips:   "58",
@@ -1830,7 +2168,7 @@ func TestRegionalRequestRequest_Year(t *testing.T) {
 }
 
 func TestRegionalRequestRequest_SetTableName(t *testing.T) {
-	nullCase := Regional{
+	nullCase := RegionalRequest{
 		tableName: "",
 		lineCode:  0,
 		geoFips:   "",
@@ -1849,7 +2187,7 @@ func TestRegionalRequestRequest_SetTableName(t *testing.T) {
 }
 
 func TestRegionalRequest_SetLineCode(t *testing.T) {
-	nullCase := Regional{
+	nullCase := RegionalRequest{
 		tableName: "",
 		lineCode:  0,
 		geoFips:   "",
@@ -1867,7 +2205,7 @@ func TestRegionalRequest_SetLineCode(t *testing.T) {
 }
 
 func TestRegionalRequest_SetGeoFips(t *testing.T) {
-	nullCase := Regional{
+	nullCase := RegionalRequest{
 		tableName: "",
 		lineCode:  0,
 		geoFips:   "",
@@ -1881,7 +2219,7 @@ func TestRegionalRequest_SetGeoFips(t *testing.T) {
 }
 
 func TestRegionalRequest_SetYear(t *testing.T) {
-	nullCase := Regional{
+	nullCase := RegionalRequest{
 		tableName: "",
 		lineCode:  0,
 		geoFips:   "",
@@ -1898,30 +2236,31 @@ func TestRegionalRequest_SetYear(t *testing.T) {
 }
 
 func TestNewRegional(t *testing.T) {
-	nullCase := NewRegional("", 0, "", "")
+	nullCase := NewRegionalRequest("", 0, "", "")
 
 	if nullCase.TableName() != "" && nullCase.LineCode() != 0 && nullCase.GeoFips() != "" && nullCase.Year() != "" {
 		t.Error("nullCase TestNewRegional")
 	}
-	nonNullCase := NewRegional("Matt", 20, "3002", "2010")
+	nonNullCase := NewRegionalRequest("Matt", 20, "3002", "2010")
 	if nonNullCase.TableName() != "Matt" && nonNullCase.LineCode() != 20 && nonNullCase.GeoFips() != "3002" && nonNullCase.Year() != "2010" {
 		t.Error("nonNullCase TestNewRegional")
 	}
 }
 
-func TestRegionalRequest_toString(t *testing.T) {
-	nonNullCase := NewRegional("bryan", 22, "21", "322")
-	if nonNullCase.toString() != "bryan, 22, 21, 322" {
-		t.Error("nonNullCase toString")
+func TestRegionalRequest_String(t *testing.T) {
+	nonNullCase := NewRegionalRequest("bryan", 22, "21", "322")
+	if nonNullCase.String() != "bryan, 22, 21, 322" {
+		t.Error("nonNullCase String")
 	}
 }
 
 func TestUnderLyingGDPPerIndustry_TableId(t *testing.T) {
 	nullCase := UnderLyingGDPPerIndustryRequest{
-		tableId:   0,
-		frequency: "",
-		years:     nil,
-		industry:  "",
+		tableId:      0,
+		frequency:    "",
+		years:        "",
+		industry:     "",
+		resultFormat: "",
 	}
 	if nullCase.TableId() != 0 {
 		t.Error("nullCase.TableId() != 0")
@@ -1930,10 +2269,11 @@ func TestUnderLyingGDPPerIndustry_TableId(t *testing.T) {
 
 func TestUnderLyingGDPPerIndustryRequest_Frequency(t *testing.T) {
 	nullCase := UnderLyingGDPPerIndustryRequest{
-		tableId:   0,
-		frequency: "",
-		years:     nil,
-		industry:  "",
+		tableId:      0,
+		frequency:    "",
+		years:        "",
+		industry:     "",
+		resultFormat: "",
 	}
 	if nullCase.Frequency() != "" {
 		t.Error("nullCase.Frequency() != null")
@@ -1943,12 +2283,13 @@ func TestUnderLyingGDPPerIndustryRequest_Frequency(t *testing.T) {
 
 func TestUnderLyingGDPPerIndustryRequest_Years(t *testing.T) {
 	nullCase := UnderLyingGDPPerIndustryRequest{
-		tableId:   0,
-		frequency: "",
-		years:     nil,
-		industry:  "",
+		tableId:      0,
+		frequency:    "",
+		years:        "",
+		industry:     "",
+		resultFormat: "",
 	}
-	if nullCase.Years() != nil {
+	if nullCase.Years() != "" {
 		t.Error("")
 	}
 
@@ -1956,10 +2297,11 @@ func TestUnderLyingGDPPerIndustryRequest_Years(t *testing.T) {
 
 func TestUnderLyingGDPPerIndustryRequest_Industry(t *testing.T) {
 	nullCase := UnderLyingGDPPerIndustryRequest{
-		tableId:   0,
-		frequency: "",
-		years:     nil,
-		industry:  "",
+		tableId:      0,
+		frequency:    "",
+		years:        "",
+		industry:     "",
+		resultFormat: "",
 	}
 
 	if nullCase.Industry() != "" {
@@ -1968,99 +2310,164 @@ func TestUnderLyingGDPPerIndustryRequest_Industry(t *testing.T) {
 
 }
 
-func TestUnderLyingGDPPerIndustryRequest_setTableId(t *testing.T) {
+func TestUnderLyingGDPPerIndustryRequest_SetTableId(t *testing.T) {
 	nullCase := UnderLyingGDPPerIndustryRequest{
-		tableId:   0,
-		frequency: "",
-		years:     nil,
-		industry:  "",
+		tableId:      0,
+		frequency:    "",
+		years:        "",
+		industry:     "",
+		resultFormat: "",
 	}
 
-	nullCase.setTableId(12)
+	nullCase.SetTableId(12)
 	if nullCase.TableId() != 12 {
 		t.Error("nullCase.TableId() != 12")
 	}
 
-	nullCase.setTableId(13)
+	nullCase.SetTableId(13)
 	if nullCase.TableId() != 13 {
 		t.Error("nullCase.TableId() != 13")
 	}
 }
 
-func TestUnderLyingGDPPerIndustryRequest_setFrequency(t *testing.T) {
+func TestUnderLyingGDPPerIndustryRequest_SetFrequency(t *testing.T) {
 	nullCase := UnderLyingGDPPerIndustryRequest{
-		tableId:   0,
-		frequency: "",
-		years:     nil,
-		industry:  "",
+		tableId:      0,
+		frequency:    "",
+		years:        "",
+		industry:     "",
+		resultFormat: "",
 	}
 
-	nullCase.setFrequency("another")
+	nullCase.SetFrequency("another")
 	if nullCase.Frequency() != "another" {
 		t.Error("nullCase.Frequency() != \"another\"")
 	}
 }
 
-func TestUnderLyingGDPPerIndustryRequest_setYears(t *testing.T) {
+func TestUnderLyingGDPPerIndustryRequest_SetYears(t *testing.T) {
 	nullCase := UnderLyingGDPPerIndustryRequest{
-		tableId:   0,
-		frequency: "",
-		years:     nil,
-		industry:  "",
+		tableId:      0,
+		frequency:    "",
+		years:        "",
+		industry:     "",
+		resultFormat: "",
 	}
 
-	nullCase.setYears([]string{"2004", "2003", "2007"})
-	if nullCase.Years()[0] != "2004" {
-		t.Error("nullCase.Years()[0] != \"2004\"")
+	nullCase.SetYears("2004, 2003, 2007")
+	if nullCase.Years() != "2004, 2003, 2007" {
+		t.Error("nullCase.Years()[0] != \"2004, 2003, 2007\"")
 	}
 
 }
 
-func TestUnderLyingGDPPerIndustryRequest_setIndustry(t *testing.T) {
+func TestUnderLyingGDPPerIndustryRequest_SetIndustry(t *testing.T) {
 	nullCase := UnderLyingGDPPerIndustryRequest{
-		tableId:   0,
-		frequency: "",
-		years:     nil,
-		industry:  "",
+		tableId:      0,
+		frequency:    "",
+		years:        "",
+		industry:     "",
+		resultFormat: "",
 	}
 
-	nullCase.setIndustry("steel")
+	nullCase.SetIndustry("steel")
 	if nullCase.Industry() != "steel" {
 		t.Error("nullCase.Industry() != \"steel\"")
 	}
 
-	nullCase.setIndustry("tech")
+	nullCase.SetIndustry("tech")
 	if nullCase.Industry() != "tech" {
 		t.Error("nullCase.Industry() != \"tech\"")
 	}
 
 }
 
-func TestUnderLyingGDPPerIndustryRequest_addYear(t *testing.T) {
+func TestUnderLyingGDPPerIndustryRequest_AddYear(t *testing.T) {
 	nullCase := UnderLyingGDPPerIndustryRequest{
-		tableId:   0,
-		frequency: "",
-		years:     nil,
-		industry:  "",
+		tableId:      0,
+		frequency:    "",
+		years:        "",
+		industry:     "",
+		resultFormat: "",
 	}
 
-	nullCase.addYear("2010")
-	if nullCase.Years()[0] != "2010" {
+	nullCase.AddYear("2010")
+	if nullCase.Years() != "2010" {
 		t.Error("nullCase.Years()[0] != \"2010\"")
 	}
 
 }
 
-func TestUnderLyingGDPPerIndustryRequest_toString(t *testing.T) {
+func TestUnderLyingGDPPerIndustryRequest_String(t *testing.T) {
 	nullCase := UnderLyingGDPPerIndustryRequest{
-		tableId:   2,
-		frequency: "yearly",
-		years:     []string{"2000", "2010"},
-		industry:  "steel",
+		tableId:      2,
+		frequency:    "yearly",
+		years:        "2000,2010",
+		industry:     "steel",
+		resultFormat: "JSON",
 	}
 
-	if nullCase.toString() != "yearly steel 2 2000 2010" {
-		t.Error("nullCase.toString() != \"yearly steel 2 2000 2010\"")
+	if nullCase.String() != "yearly steel 2 2000,2010 JSON" {
+		t.Error("nullCase.String() != yearly steel 2 2000,2010 JSON")
 	}
 
+}
+
+func TestUnderLyingGDPPerIndustryRequest_ResultFormat(t *testing.T) {
+	nullCase := UnderLyingGDPPerIndustryRequest{
+		tableId:      0,
+		frequency:    "",
+		years:        "",
+		industry:     "",
+		resultFormat: "",
+	}
+	if nullCase.ResultFormat() != "" {
+		t.Error("Test failed resultFormat != nil")
+	}
+	nonNullCase := UnderLyingGDPPerIndustryRequest{
+		tableId:      0,
+		frequency:    "",
+		years:        "",
+		industry:     "",
+		resultFormat: "XML",
+	}
+	if nonNullCase.ResultFormat() != "XML" {
+		t.Error("Test failed resultFormat != XML")
+	}
+}
+
+func TestUnderLyingGDPPerIndustryRequest_SetResultFormat(t *testing.T) {
+	nonNullCase := UnderLyingGDPPerIndustryRequest{
+		tableId:      0,
+		frequency:    "",
+		years:        "",
+		industry:     "",
+		resultFormat: "",
+	}
+	if nonNullCase.ResultFormat() != "" {
+		t.Error("Test failed resultFormat != nil")
+	}
+	nonNullCase.SetResultFormat("JSON")
+	if nonNullCase.ResultFormat() != "JSON" {
+		t.Error("Test failed resultFormat != JSON")
+	}
+}
+
+func TestNewUnderLyingGDPPerIndustryRequest(t *testing.T) {
+	newCase := NewUnderLyingGDPPerIndustryRequest(1, "moderate", "2012", "Steel", "JSON")
+	if newCase.TableId() != 1 {
+		t.Error("Test failed tableId != 1")
+	}
+	if newCase.Frequency() != "moderate" {
+		t.Error("Test failed Frequency != moderate")
+	}
+	if newCase.Years() != "2012" {
+		t.Error("Test failed years != 2012")
+	}
+	if newCase.Industry() != "Steel" {
+		t.Error("Test failed Industry != Steel")
+	}
+	if newCase.ResultFormat() != "JSON" {
+		t.Error("Test failed ResultFormat != JSON")
+	}
 }

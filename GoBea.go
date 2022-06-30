@@ -135,12 +135,14 @@ func (I *ITA) Request() string {
 type GDPByIndustry struct {
 	tableId     int
 	frequency   string
-	year        int
+	year        string
 	industry    string
 	requestType string
 }
 
-//TODO test requestType field getters and setters
+func NewGDPByIndustry(tableId int, frequency string, year string, industry string, requestType string) *GDPByIndustry {
+	return &GDPByIndustry{tableId: tableId, frequency: frequency, year: year, industry: industry, requestType: requestType}
+}
 
 func (G *GDPByIndustry) RequestType() string {
 	return G.requestType
@@ -171,12 +173,12 @@ func (G *GDPByIndustry) SetFrequency(frequency string) {
 }
 
 //Year is a getter for the the year field of a GDPByIndustry object
-func (G *GDPByIndustry) Year() int {
+func (G *GDPByIndustry) Year() string {
 	return G.year
 }
 
 //SetYear is a setter for a GDPByIndustry object
-func (G *GDPByIndustry) SetYear(year int) {
+func (G *GDPByIndustry) SetYear(year string) {
 	G.year = year
 }
 
@@ -190,26 +192,25 @@ func (G *GDPByIndustry) SetIndustry(industry string) {
 	G.industry = industry
 }
 
-//NewGDPByIndustry is a constructor for a GDPByIndustry object
-func NewGDPByIndustry(tableId int, frequency string, year int, industry string) *GDPByIndustry {
-	return &GDPByIndustry{tableId: tableId, frequency: frequency, year: year, industry: industry}
-}
-
 //String is a method which returns a string representation of a GDPByIndustry object
 func (G *GDPByIndustry) String() string {
-	return strconv.Itoa(G.tableId) + " " + G.frequency + " " + strconv.Itoa(G.year) + " " + G.industry
+	return strconv.Itoa(G.tableId) + " " + G.frequency + " " + G.year + " " + G.industry + " " + G.requestType
 }
 
 func (G *GDPByIndustry) Request() string {
-	return apiAddress + "&DataSetName=GDPbyIndustry&Year=" + strconv.Itoa(G.year) + "&Industry=" + G.industry + "&tableID=" + strconv.Itoa(G.tableId) + "&Frequency=" + G.frequency + "&ResultFormat=" + G.requestType
+	return apiAddress + "&DataSetName=GDPbyIndustry&Year=" + G.year + "&Industry=" + G.industry + "&tableID=" + strconv.Itoa(G.tableId) + "&Frequency=" + G.frequency + "&ResultFormat=" + G.requestType
 }
 
 //InputOutputDataReq is a type struct which embodies all the required fields
 //	of a request made for Input/Output data
 type InputOutputDataReq struct {
 	tableId      int
-	years        []string
+	years        string
 	returnFormat string
+}
+
+func NewInputOutputDataReq(tableId int, years string, returnFormat string) *InputOutputDataReq {
+	return &InputOutputDataReq{tableId: tableId, years: years, returnFormat: returnFormat}
 }
 
 //ReturnFormat provides a method for returning the value of the returnFormat
@@ -218,30 +219,30 @@ func (r InputOutputDataReq) ReturnFormat() string {
 	return r.returnFormat
 }
 
-//setReturnFormat provides a method for setting the returnFormat variable of
+//SetReturnFormat provides a method for setting the returnFormat variable of
 //	of the InputOutputDataReq
-func (r *InputOutputDataReq) setReturnFormat(format string) {
+func (r *InputOutputDataReq) SetReturnFormat(format string) {
 	r.returnFormat = format
 }
 
 //Years provides a method for returning the years[] variable of the InputOutputDataReq
 //struct
-func (r InputOutputDataReq) Years() []string {
+func (r InputOutputDataReq) Years() string {
 	return r.years
 }
 
-//addYear provides a method for appending a year to the years[] variable
-func (r *InputOutputDataReq) addYear(year string) {
-	if r.years == nil {
-		r.years = []string{year}
+//AddYear provides a method for appending a year to the years[] variable
+func (r *InputOutputDataReq) AddYear(year string) {
+	if r.years != "" {
+		r.years += "," + year
 		return
 	}
-	r.years = append(r.years, year)
+	r.SetYears(year)
 }
 
-//setYears provides a method for changing the entire years[] with a new array of years[]
+//SetYears provides a method for changing the entire years[] with a new array of years[]
 //for the InputOutputDataReq struct
-func (r *InputOutputDataReq) setYears(newYears []string) {
+func (r *InputOutputDataReq) SetYears(newYears string) {
 	r.years = newYears
 }
 
@@ -251,9 +252,9 @@ func (r InputOutputDataReq) TableId() int {
 	return r.tableId
 }
 
-//setTableId provides a method for setting the tableId field of the InputOutputDataReq
+//SetTableId provides a method for setting the tableId field of the InputOutputDataReq
 //struct
-func (r *InputOutputDataReq) setTableId(id int) {
+func (r *InputOutputDataReq) SetTableId(id int) {
 
 	r.tableId = id
 
@@ -261,22 +262,15 @@ func (r *InputOutputDataReq) setTableId(id int) {
 
 //toString provides a method for returning the InputOutputDataReq struct as a
 //string in the format of a BEA request
-func (r *InputOutputDataReq) toString() (string, int) {
+func (r *InputOutputDataReq) String() string {
 
-	var returnYears string
-	for _, year := range r.years {
-
-		returnYears += " " + year
-
-	}
-	return strconv.Itoa(r.tableId) + returnYears + " " + r.returnFormat, 0
+	return strconv.Itoa(r.tableId) + " " + r.years + " " + r.returnFormat
 
 }
 
-//TODO: create a comma separated list of string values for years
 func (r *InputOutputDataReq) Request() string {
 
-	return apiAddress + "InputOutput" + "&Year=" + "&tableID=" + strconv.Itoa(r.tableId) + "&ResultFormat=" + r.returnFormat
+	return apiAddress + "InputOutput" + "&Year=" + r.years + "&tableID=" + strconv.Itoa(r.tableId) + "&ResultFormat=" + r.returnFormat
 }
 
 type IIPRequest struct {
@@ -340,6 +334,19 @@ type IntlServTradeRequest struct {
 	tradeDirection string
 	affiliation    string
 	areaOrCountry  string
+	requestType    string
+}
+
+func NewIntlServTradeRequest(typeOfService string, tradeDirection string, affiliation string, areaOrCountry string, requestType string) *IntlServTradeRequest {
+	return &IntlServTradeRequest{typeOfService: typeOfService, tradeDirection: tradeDirection, affiliation: affiliation, areaOrCountry: areaOrCountry, requestType: requestType}
+}
+
+func (i *IntlServTradeRequest) RequestType() string {
+	return i.requestType
+}
+
+func (i *IntlServTradeRequest) SetRequestType(requestType string) {
+	i.requestType = requestType
 }
 
 //TypeOfService is a method used to access the typeOfService field of a IntlServTradeRequest object
@@ -383,8 +390,12 @@ func (i *IntlServTradeRequest) SetAreaOrCountry(areaOrCountry string) {
 }
 
 //toString returns a string representation of the IntlServTradeRequest object
-func (i *IntlServTradeRequest) toString() string {
-	return i.TypeOfService() + " " + i.TradeDirection() + " " + i.Affiliation() + " " + i.AreaOrCountry()
+func (i *IntlServTradeRequest) String() string {
+	return i.TypeOfService() + " " + i.TradeDirection() + " " + i.Affiliation() + " " + i.AreaOrCountry() + " " + i.RequestType()
+}
+
+func (i *IntlServTradeRequest) Request() string {
+	return apiAddress + "ItlServTrade" + "&TypeOfService=" + i.typeOfService + "&TradeDirection=" + i.tradeDirection + "&Affiliation=" + i.affiliation + "&AreaOrCountry=" + i.areaOrCountry + "&ResultFormat=" + i.requestType
 }
 
 type MNERequest struct {
@@ -488,12 +499,29 @@ func (M *MNERequest) String() string {
 	return M.directionOfInvestment + " " + strconv.Itoa(M.seriesId) + " " + M.classification + " " + M.year + " " + M.country + " " + M.industry + " " + M.getFootnotes + " " + M.requestType
 }
 
+func (M *MNERequest) Request() string {
+	return apiAddress + "MNE" + "&Year=" + M.directionOfInvestment + "&Country=" + M.country + "&DirectonOfInvestment=" + M.directionOfInvestment + "&Classification=" + M.classification + "&ResultFormat=" + M.requestType
+}
+
 //NIPADataRequest is a struct used to represent a NIPA request
 //to the BEA.  It consists of a tableId, frequency[], years[].
 type NIPADataRequest struct {
-	tableId   int
-	frequency []string
-	years     []string
+	tableId     int
+	frequency   string
+	years       string
+	requestType string
+}
+
+func NewNIPADataRequest(tableId int, frequency string, years string, requestType string) *NIPADataRequest {
+	return &NIPADataRequest{tableId: tableId, frequency: frequency, years: years, requestType: requestType}
+}
+
+func (r *NIPADataRequest) RequestType() string {
+	return r.requestType
+}
+
+func (r *NIPADataRequest) SetRequestType(requestType string) {
+	r.requestType = requestType
 }
 
 //TableId returns the value of the tableId field of the NIPADataRequest.
@@ -501,55 +529,61 @@ func (r NIPADataRequest) TableId() int {
 	return r.tableId
 }
 
-//setTableId sets the value of the tableId field for a NIPADataRequest object.
-func (r *NIPADataRequest) setTableId(newTableId int) {
+//SetTableId sets the value of the tableId field for a NIPADataRequest object.
+func (r *NIPADataRequest) SetTableId(newTableId int) {
 	r.tableId = newTableId
 }
 
 //Frequency returns an array of strings for the time series data.
-func (r NIPADataRequest) Frequency() []string {
+func (r NIPADataRequest) Frequency() string {
 	return r.frequency
 }
 
-//setFrequency sets the value of the frequency field fo a NIPADataRequest object.
-func (r *NIPADataRequest) setFrequency(newFrequencies []string) {
+//SetFrequency sets the value of the frequency field fo a NIPADataRequest object.
+func (r *NIPADataRequest) SetFrequency(newFrequencies string) {
 	r.frequency = newFrequencies
 }
 
-//addFrequency adds a new frequency to the end of the list of frequencies in the NIPADataRequest
-func (r *NIPADataRequest) addFrequency(newFrequency string) {
-	r.frequency = append(r.frequency, newFrequency)
+//AddFrequency adds a new frequency to the end of the list of frequencies in the NIPADataRequest
+func (r *NIPADataRequest) AddFrequency(newFrequency string) {
+	if r.frequency == "" {
+		r.frequency = newFrequency
+		return
+	}
+	r.frequency += "," + newFrequency
 }
 
 //Years returns the array of years in the NIPADataRequest.
-func (r NIPADataRequest) Years() []string {
+func (r NIPADataRequest) Years() string {
 	return r.years
 }
 
-//setYears sets the value of years field of a NIPADataRequest object.
-func (r *NIPADataRequest) setYears(newYears []string) {
+//SetYears sets the value of years field of a NIPADataRequest object.
+func (r *NIPADataRequest) SetYears(newYears string) {
 	r.years = newYears
 }
 
-func (r *NIPADataRequest) addYear(newYear string) {
-	r.years = append(r.years, newYear)
+//AddYear appends a new year to the NIPADataRequest
+func (r *NIPADataRequest) AddYear(newYear string) {
+	if r.years == "" {
+		r.years = newYear
+		return
+	}
+	r.years += "," + newYear
 }
 
-func (r *NIPADataRequest) toString() string {
+//String creates a string form of the NIPADataRequest
+func (r *NIPADataRequest) String() string {
 
-	var returnString string = strconv.Itoa(r.tableId) + ","
-
-	for _, freq := range r.frequency {
-
-		returnString += freq + " "
-
-	}
-	returnString += ","
-
-	for _, year := range r.years {
-		returnString += year + " "
-	}
+	var returnString string = strconv.Itoa(r.tableId) + " "
+	returnString += r.frequency + " "
+	returnString += r.years + " "
+	returnString += r.requestType
 	return returnString
+}
+
+func (r *NIPADataRequest) Request() string {
+	return apiAddress + "NIPA" + "&TableName=" + strconv.Itoa(r.tableId) + "&Frequency=" + r.frequency + "&Year=" + r.years + "&RequestType=" + r.requestType
 }
 
 type NIUnderlyingDetailRequest struct {
@@ -609,59 +643,113 @@ func (N NIUnderlyingDetailRequest) String() string {
 	return N.tableName + " " + N.frequency + " " + N.year
 }
 
-type Regional struct {
-	tableName string
-	lineCode  int
-	geoFips   string
-	year      string
+func (N *NIUnderlyingDetailRequest) Request() string {
+	return apiAddress + "NIUnderlyingDetail" + "&TableName=" + N.tableName + "&Frequency=" + N.frequency + "&Year=" + N.year + "&RequestType=" + N.requestType
 }
 
-func (r *Regional) TableName() string {
+type RegionalRequest struct {
+	tableName     string
+	lineCode      int
+	geoFips       string
+	year          string
+	requestFormat string
+}
+
+//RequestFormat is a getter for the return format of the RegionalRequest
+func (r *RegionalRequest) RequestFormat() string {
+	return r.requestFormat
+}
+
+//SetRequestFormat is a setter for the return format of the RegionalRequest
+func (r *RegionalRequest) SetRequestFormat(requestFormat string) {
+	r.requestFormat = requestFormat
+}
+
+//TableName is a getter for the table name of the RegionalRequest
+func (r *RegionalRequest) TableName() string {
 	return r.tableName
 }
 
-func (r *Regional) SetTableName(tableName string) {
+//SetTableName is a setter for the table name of the RegionalRequest
+func (r *RegionalRequest) SetTableName(tableName string) {
 	r.tableName = tableName
 }
 
-func (r *Regional) LineCode() int {
+//LineCode is a getter for the line code of the RegionalRequest
+func (r *RegionalRequest) LineCode() int {
 	return r.lineCode
 }
 
-func (r *Regional) SetLineCode(lineCode int) {
+//SetLineCode is a setter for the line code of the RegionalRequest
+func (r *RegionalRequest) SetLineCode(lineCode int) {
 	r.lineCode = lineCode
 }
 
-func (r *Regional) GeoFips() string {
+//GeoFips is a getter for the geo fips of the RegionalRequest
+func (r *RegionalRequest) GeoFips() string {
 	return r.geoFips
 }
 
-func (r *Regional) SetGeoFips(geoFips string) {
+//SetGeoFips is a setter for the geo fips of the RegionalRequest
+func (r *RegionalRequest) SetGeoFips(geoFips string) {
 	r.geoFips = geoFips
 }
 
-func (r *Regional) Year() string {
+//Year is a getter for the year of the RegionalRequest
+func (r *RegionalRequest) Year() string {
 	return r.year
 }
 
-func (r *Regional) SetYear(year string) {
+//SetYear is a setter for the year of the RegionalRequest
+func (r *RegionalRequest) SetYear(year string) {
 	r.year = year
 }
 
-func NewRegional(tableName string, lineCode int, geoFips string, year string) *Regional {
-	return &Regional{tableName: tableName, lineCode: lineCode, geoFips: geoFips, year: year}
+//NewRegionalRequest is a constructor for a RegionalRequest
+func NewRegionalRequest(tableName string, lineCode int, geoFips string, year string) *RegionalRequest {
+	return &RegionalRequest{tableName: tableName, lineCode: lineCode, geoFips: geoFips, year: year}
 }
 
-func (r *Regional) toString() string {
+//String returns a string representation of a RegionalRequest
+func (r *RegionalRequest) String() string {
 
 	return r.tableName + ", " + strconv.Itoa(r.lineCode) + ", " + r.geoFips + ", " + r.year
 }
 
+func (r *RegionalRequest) Request() string {
+	return apiAddress + "Regional" + "&TableName=" + r.tableName + "&LineCode=" + strconv.Itoa(r.lineCode) + "&Year" + r.year + "&GeoFips=" + r.geoFips + "&RequestFormat=" + r.requestFormat
+}
+
 type UnderLyingGDPPerIndustryRequest struct {
-	tableId   int
-	frequency string
-	years     []string
-	industry  string
+	tableId      int
+	frequency    string
+	years        string
+	industry     string
+	resultFormat string
+}
+
+func NewUnderLyingGDPPerIndustryRequest(tableId int, frequency string, years string, industry string, resultFormat string) *UnderLyingGDPPerIndustryRequest {
+	return &UnderLyingGDPPerIndustryRequest{tableId: tableId, frequency: frequency, years: years, industry: industry, resultFormat: resultFormat}
+}
+
+func (r *UnderLyingGDPPerIndustryRequest) SetTableId(tableId int) {
+	r.tableId = tableId
+}
+
+func (r *UnderLyingGDPPerIndustryRequest) SetFrequency(frequency string) {
+	r.frequency = frequency
+}
+
+func (r *UnderLyingGDPPerIndustryRequest) SetYears(years string) {
+	r.years = years
+}
+
+func (r *UnderLyingGDPPerIndustryRequest) ResultFormat() string {
+	return r.resultFormat
+}
+
+func (r *UnderLyingGDPPerIndustryRequest) SetResultFormat(resultFormat string) {
+	r.resultFormat = resultFormat
 }
 
 //TableId returns the set tableId value for the UnderLyingGDPPerIndustryRequest object
@@ -669,34 +757,23 @@ func (r UnderLyingGDPPerIndustryRequest) TableId() int {
 	return r.tableId
 }
 
-//setTableId sets the value of the tableId field of the UnderLyingGDPPerIndustryRequest object
-func (r *UnderLyingGDPPerIndustryRequest) setTableId(newId int) {
-	r.tableId = newId
-}
-
 //Frequency returns the frequency value for the UnderLyingGDPPerIndustryRequest object
 func (r UnderLyingGDPPerIndustryRequest) Frequency() string {
 	return r.frequency
 }
 
-//setFrequency sets the frequency field of the UnderLyingGDPPerIndustryRequest object
-func (r *UnderLyingGDPPerIndustryRequest) setFrequency(newFrequency string) {
-	r.frequency = newFrequency
-}
-
 //Years returns an array of strings for the UnderLyingGDPPerIndustryRequest object
-func (r UnderLyingGDPPerIndustryRequest) Years() []string {
+func (r UnderLyingGDPPerIndustryRequest) Years() string {
 	return r.years
 }
 
-//setYears sets the array of the years field of a UnderLyingGDPPerIndustryRequest object
-func (r *UnderLyingGDPPerIndustryRequest) setYears(newYears []string) {
-	r.years = newYears
-}
-
-//addYear appends a year to the years field of UnderLyingGDPPerIndustryRequest object
-func (r *UnderLyingGDPPerIndustryRequest) addYear(newYear string) {
-	r.years = append(r.years, newYear)
+//AddYear appends a year to the years field of UnderLyingGDPPerIndustryRequest object
+func (r *UnderLyingGDPPerIndustryRequest) AddYear(newYear string) {
+	if r.years == "" {
+		r.years = newYear
+		return
+	}
+	r.years += "," + newYear
 }
 
 //Industry returns the value of the UnderLyingGDPPerIndustryRequest object
@@ -705,19 +782,22 @@ func (r UnderLyingGDPPerIndustryRequest) Industry() string {
 }
 
 //setIndustry sets the industry field of the UnderLyingGDPPerIndustryRequest object
-func (r *UnderLyingGDPPerIndustryRequest) setIndustry(newIndustry string) {
+func (r *UnderLyingGDPPerIndustryRequest) SetIndustry(newIndustry string) {
 	r.industry = newIndustry
 }
 
-//toString() a function which returns the current string representation of an UnderLyingGDPPerIndustryRequest object
-func (r UnderLyingGDPPerIndustryRequest) toString() string {
+//String() a function which returns the current string representation of an UnderLyingGDPPerIndustryRequest object
+func (r UnderLyingGDPPerIndustryRequest) String() string {
 
 	var request = ""
 	request += r.Frequency() + " "
 	request += r.Industry() + " "
-	request += strconv.Itoa(r.TableId())
-	for i := 0; i < len(r.Years()); i++ {
-		request += " " + r.Years()[i]
-	}
+	request += strconv.Itoa(r.TableId()) + " "
+	request += r.Years() + " "
+	request += r.resultFormat
 	return request
+}
+
+func (r *UnderLyingGDPPerIndustryRequest) Request() string {
+	return apiAddress + "underlyingGDPbyIndustry" + "&Year=" + r.years + "&Industry=" + r.industry + "&tableId=" + strconv.Itoa(r.tableId) + "&Frequency=" + r.frequency + "&ResultFormat=" + r.resultFormat
 }

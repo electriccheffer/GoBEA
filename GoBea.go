@@ -844,7 +844,7 @@ func (r UnderLyingGDPByIndustryRequest) Industry() string {
 	return r.industry
 }
 
-//setIndustry sets the industry field of the UnderLyingGDPByIndustryRequest object
+//SetIndustry sets the industry field of the UnderLyingGDPByIndustryRequest object
 func (r *UnderLyingGDPByIndustryRequest) SetIndustry(newIndustry string) {
 	r.industry = newIndustry
 }

@@ -4,13 +4,8 @@ import (
 	"testing"
 )
 
-//TODO: Review GDPPerIndustryRequest tests
-//TODO: Review NIPADataRequest tests
-//TODO: Review RegionalRequest tests
-//TODO: Review UnderlyingGDPPerIndustryRequest tests
-
-func TestInputOutputDataReq_Years(t *testing.T) {
-	nullCase := InputOutputDataReq{
+func TestInputOutputDataRequest_Years(t *testing.T) {
+	nullCase := InputOutputDataRequest{
 		tableId:      0,
 		years:        "",
 		returnFormat: "",
@@ -18,7 +13,7 @@ func TestInputOutputDataReq_Years(t *testing.T) {
 	if nullCase.Years() != "" {
 		t.Error("Test failed years != nil")
 	}
-	nonNullCase := InputOutputDataReq{
+	nonNullCase := InputOutputDataRequest{
 		tableId:      0,
 		years:        "2012",
 		returnFormat: "",
@@ -29,8 +24,8 @@ func TestInputOutputDataReq_Years(t *testing.T) {
 
 }
 
-func TestInputOutputDataReq_TableId(t *testing.T) {
-	nullCase := InputOutputDataReq{
+func TestInputOutputDataRequest_TableId(t *testing.T) {
+	nullCase := InputOutputDataRequest{
 		tableId:      0,
 		years:        "",
 		returnFormat: "",
@@ -38,7 +33,7 @@ func TestInputOutputDataReq_TableId(t *testing.T) {
 	if nullCase.TableId() != 0 {
 		t.Error("Test failed tableId != 0")
 	}
-	nonNullCase := InputOutputDataReq{
+	nonNullCase := InputOutputDataRequest{
 		tableId:      1,
 		years:        "",
 		returnFormat: "",
@@ -48,8 +43,8 @@ func TestInputOutputDataReq_TableId(t *testing.T) {
 	}
 }
 
-func TestInputOutputDataReq_ReturnFormat(t *testing.T) {
-	nullCase := InputOutputDataReq{
+func TestInputOutputDataRequest_ReturnFormat(t *testing.T) {
+	nullCase := InputOutputDataRequest{
 		tableId:      0,
 		years:        "",
 		returnFormat: "",
@@ -57,7 +52,7 @@ func TestInputOutputDataReq_ReturnFormat(t *testing.T) {
 	if nullCase.ReturnFormat() != "" {
 		t.Error("Test failed returnFormat != nil")
 	}
-	nonNullCase := InputOutputDataReq{
+	nonNullCase := InputOutputDataRequest{
 		tableId:      0,
 		years:        "",
 		returnFormat: "JSON",
@@ -67,8 +62,8 @@ func TestInputOutputDataReq_ReturnFormat(t *testing.T) {
 	}
 }
 
-func TestInputOutputDataReq_AddYear(t *testing.T) {
-	nullCase := InputOutputDataReq{
+func TestInputOutputDataRequest_AddYear(t *testing.T) {
+	nullCase := InputOutputDataRequest{
 		tableId:      0,
 		years:        "",
 		returnFormat: "",
@@ -86,8 +81,8 @@ func TestInputOutputDataReq_AddYear(t *testing.T) {
 	}
 }
 
-func TestInputOutputDataReq_SetReturnFormat(t *testing.T) {
-	nullCase := InputOutputDataReq{
+func TestInputOutputDataRequest_SetReturnFormat(t *testing.T) {
+	nullCase := InputOutputDataRequest{
 		tableId:      0,
 		years:        "",
 		returnFormat: "",
@@ -101,8 +96,8 @@ func TestInputOutputDataReq_SetReturnFormat(t *testing.T) {
 	}
 }
 
-func TestInputOutputDataReq_SetYears(t *testing.T) {
-	nullCase := InputOutputDataReq{
+func TestInputOutputDataRequest_SetYears(t *testing.T) {
+	nullCase := InputOutputDataRequest{
 		tableId:      0,
 		years:        "",
 		returnFormat: "",
@@ -117,8 +112,8 @@ func TestInputOutputDataReq_SetYears(t *testing.T) {
 
 }
 
-func TestInputOutputDataReq_SetTableId(t *testing.T) {
-	nullCase := InputOutputDataReq{
+func TestInputOutputDataRequest_SetTableId(t *testing.T) {
+	nullCase := InputOutputDataRequest{
 		tableId:      0,
 		years:        "",
 		returnFormat: "",
@@ -132,8 +127,8 @@ func TestInputOutputDataReq_SetTableId(t *testing.T) {
 	}
 }
 
-func TestInputOutputDataReq_String(t *testing.T) {
-	nonNullCase := InputOutputDataReq{
+func TestInputOutputDataRequest_String(t *testing.T) {
+	nonNullCase := InputOutputDataRequest{
 		tableId:      1,
 		years:        "2012",
 		returnFormat: "XML",
@@ -143,8 +138,8 @@ func TestInputOutputDataReq_String(t *testing.T) {
 	}
 }
 
-func TestNewInputOutputDataReq(t *testing.T) {
-	newCase := NewInputOutputDataReq(1, "2012,2013", "JSON")
+func TestNewInputOutputDataRequest(t *testing.T) {
+	newCase := NewInputOutputDataRequest(1, "2012,2013", "JSON")
 	if newCase.TableId() != 1 {
 		t.Error("Test failed tableId != 1")
 	}
@@ -153,6 +148,13 @@ func TestNewInputOutputDataReq(t *testing.T) {
 	}
 	if newCase.ReturnFormat() != "JSON" {
 		t.Error("Test failed returnFormat != JSON")
+	}
+}
+
+func TestInputOutputDataRequest_Request(t *testing.T) {
+	testRequest := NewInputOutputDataRequest(56, "2010,2011,2012,2013", "json")
+	if testRequest.Request() != "https://apps.bea.gov/api/data/?&UserID=D27C93B3-297B-4BA6-826C-25D85653E54D&method=GetData&DataSetName=InputOutput&Year=2010,2011,2012,2013&tableID=56&ResultFormat=json" {
+		t.Error("Test failed for InputOutputRequest")
 	}
 }
 
@@ -288,6 +290,13 @@ func TestNewFixedAssetsRequest(t *testing.T) {
 		t.Error("Test failed requestType should be set to JSON.")
 	}
 
+}
+
+func TestFixedAssetsRequest_Request(t *testing.T) {
+	testRequest := NewFixedAssetsRequest("FAAt405", "2015,2016", "json")
+	if testRequest.Request() != "https://apps.bea.gov/api/data/?&UserID=D27C93B3-297B-4BA6-826C-25D85653E54D&method=GetData&DataSetName=FixedAssets&TableName=FAAt405&Year=2015,2016&ResultFormat=json" {
+		t.Error("Test failed FixedAssets request failed")
+	}
 }
 
 func TestGDPByIndustry_Frequency(t *testing.T) {
@@ -523,6 +532,13 @@ func TestNewGDPByIndustry(t *testing.T) {
 	}
 }
 
+func TestGDPByIndustry_Request(t *testing.T) {
+	testRequest := NewGDPByIndustry(1, "A", "2012,2011", "ALL", "xml")
+	if testRequest.Request() != "https://apps.bea.gov/api/data/?&UserID=D27C93B3-297B-4BA6-826C-25D85653E54D&method=GetData&DataSetName=GDPByIndustry&Year=2012,2011&Industry=ALL&tableID=1&Frequency=A&ResultFormat=xml" {
+		t.Error("Test failed GDPByIndustry Request")
+	}
+}
+
 func TestIIPRequest_Year(t *testing.T) {
 
 	nullCase := IIPRequest{
@@ -737,6 +753,32 @@ func TestIIPRequest_String(t *testing.T) {
 	}
 }
 
+func TestNewIIPRequest(t *testing.T) {
+	newCase := NewIIPRequest("FinAssets", "many", "not", "2001", "json")
+	if newCase.TypeOfInvestment() != "FinAssets" {
+		t.Error("Test failed typeOfInvestment != FinAssets")
+	}
+	if newCase.Component() != "many" {
+		t.Error("Test failed component != many")
+	}
+	if newCase.Frequency() != "not" {
+		t.Error("Test failed frequency != not")
+	}
+	if newCase.Year() != "2001" {
+		t.Error("Test failed year != 2001")
+	}
+	if newCase.ReturnFormat() != "json" {
+		t.Error("Test failed request != json")
+	}
+}
+
+func TestIIPRequest_Request(t *testing.T) {
+	testRequest := NewIIPRequest("FinAssetsExclFinDeriv", "ChgPosPrice", "A", "ALL", "json")
+	if testRequest.Request() != "https://apps.bea.gov/api/data/?&UserID=D27C93B3-297B-4BA6-826C-25D85653E54D&method=GetData&DataSetName=IIP&TypeOfInvestment=FinAssetsExclFinDeriv&Component=ChgPosPrice&Frequency=A&Year=ALL&ResultFormat=json" {
+		t.Error("Test failed request does not match.")
+	}
+}
+
 func TestIntlServTradeRequest_Affiliation(t *testing.T) {
 
 	nullCase := IntlServTradeRequest{
@@ -923,7 +965,7 @@ func TestIntlServTradeRequest_String(t *testing.T) {
 }
 
 func TestNewIntlServTradeRequest(t *testing.T) {
-	newCase := NewIntlServTradeRequest("good", "backwards", "non", "USA", "XML")
+	newCase := NewIntlServTradeRequest("good", "2012", "backwards", "non", "USA", "XML")
 	if newCase.TypeOfService() != "good" {
 		t.Error("Test failed typeOfService != good")
 	}
@@ -938,6 +980,9 @@ func TestNewIntlServTradeRequest(t *testing.T) {
 	}
 	if newCase.RequestType() != "XML" {
 		t.Error("Test failed requestType != USA")
+	}
+	if newCase.Year() != "2012" {
+		t.Error("Test failed year != 2012")
 	}
 }
 
@@ -978,6 +1023,75 @@ func TestIntlServTradeRequest_SetRequestType(t *testing.T) {
 	nullCase.SetRequestType("JSON")
 	if nullCase.RequestType() != "JSON" {
 		t.Error("Test failed requestType != JSON")
+	}
+}
+
+func TestIntlServTradeRequest_Year(t *testing.T) {
+	nullCase := IntlServTradeRequest{
+		typeOfService:  "",
+		year:           "",
+		tradeDirection: "",
+		affiliation:    "",
+		areaOrCountry:  "",
+		requestType:    "",
+	}
+	if nullCase.Year() != "" {
+		t.Error("Test failed year != nil")
+	}
+	nonNullCase := IntlServTradeRequest{
+		typeOfService:  "",
+		year:           "2012",
+		tradeDirection: "",
+		affiliation:    "",
+		areaOrCountry:  "",
+		requestType:    "",
+	}
+	if nonNullCase.Year() != "2012" {
+		t.Error("Test failed year != 2012")
+	}
+}
+
+func TestIntlServTradeRequest_SetYear(t *testing.T) {
+	nullCase := IntlServTradeRequest{
+		typeOfService:  "",
+		year:           "",
+		tradeDirection: "",
+		affiliation:    "",
+		areaOrCountry:  "",
+		requestType:    "",
+	}
+	if nullCase.Year() != "" {
+		t.Error("Test failed year is not empty")
+	}
+	nullCase.SetYear("2012")
+	if nullCase.Year() != "2012" {
+		t.Error("Test failed year != 2012")
+	}
+}
+
+func TestIntlServTradeRequest_AddYear(t *testing.T) {
+	addCase := IntlServTradeRequest{
+		typeOfService:  "",
+		year:           "2012",
+		tradeDirection: "",
+		affiliation:    "",
+		areaOrCountry:  "",
+		requestType:    "",
+	}
+	if addCase.Year() != "2012" {
+		t.Error("Test failed year != 2012")
+	}
+	addCase.AddYear("2013")
+	if addCase.Year() != "2012,2013" {
+		t.Error("Test failed year != 2012,2013")
+	}
+}
+
+func TestIntlServTradeRequest_Request(t *testing.T) {
+	requestCase := NewIntlServTradeRequest("AllServiceTypes", "2014,2015", "Imports", "AllAffiliations", "Germany", "xml")
+	if requestCase.Request() != "https://apps.bea.gov/api/data/?&UserID=D27C93B3-297B-4BA6-826C-25D85653E54D&method=GetData&DataSetName=IntlServTrade&TypeOfService=AllServiceTypes&TradeDirection=Imports&Affiliation=AllAffiliations&AreaOrCountry=Germany&Year=2014,2015&ResultFormat=xml" {
+		t.Log(requestCase.Request())
+		t.Error("Test failed Request is not correct")
 	}
 }
 
@@ -1197,6 +1311,13 @@ func TestITA_String(t *testing.T) {
 	}
 	if firstCase.String() != "positive usa moderate 2012 JSON" {
 		t.Error("Test failed string form is not correct")
+	}
+}
+
+func TestITA_Request(t *testing.T) {
+	requestCase := NewITA("BalGds", "China", "A", "2011,2012", "xml")
+	if requestCase.Request() != "https://apps.bea.gov/api/data/?&UserID=D27C93B3-297B-4BA6-826C-25D85653E54D&method=GetData&DataSetName=ITA&Indicator=BalGds&AreaOrCountry=China&Frequency=A&Year=2011,2012&ResultFormat=xml" {
+		t.Error("Test failed request string is invalid")
 	}
 }
 
@@ -1663,11 +1784,63 @@ func TestNewMNERequest(t *testing.T) {
 	}
 }
 
-//TODO: test new methods and constructor for NIPADataRequest
+func TestMNERequest_Request(t *testing.T) {
+	requestTest := NewMNERequest("Inward", 0, "CountryByIndustry", "2013,2012,2011,2010", "308", "3000", "", "xml")
+	if requestTest.Request() != "https://apps.bea.gov/api/data/?&UserID=D27C93B3-297B-4BA6-826C-25D85653E54D&method=GetData&DataSetName=MNE&Year=2013,2012,2011,2010&Country=308&Industry=3000&DirectionOfInvestment=Inward&Classification=CountryByIndustry&ResultFormat=xml" {
+		t.Log(requestTest.Request())
+		t.Error("Test failed MNE Request")
+	}
+}
+
+func TestNIPADataRequest_TableName(t *testing.T) {
+	nullCase := NIPADataRequest{
+		tableName:   "",
+		frequency:   "",
+		years:       "",
+		requestType: "",
+	}
+	if nullCase.TableName() != "" {
+		t.Error("Test failed tableName is not nil")
+	}
+	nonNullCase := NIPADataRequest{
+		tableName:   "someName",
+		frequency:   "",
+		years:       "",
+		requestType: "",
+	}
+	if nonNullCase.TableName() != "someName" {
+		t.Error("someName")
+	}
+}
+
+func TestNIPADataRequest_SetTableName(t *testing.T) {
+	nullCase := NIPADataRequest{
+		tableName:   "",
+		frequency:   "",
+		years:       "",
+		requestType: "",
+	}
+	if nullCase.TableName() != "" {
+		t.Error("Test failed tableName is not nil")
+	}
+	nullCase.SetTableName("someName")
+	if nullCase.TableName() != "someName" {
+		t.Error("Test failed tableName != someName")
+	}
+}
+
+func TestNIPADataRequest_Request(t *testing.T) {
+	requestTest := NewNIPADataRequest("T10101", "A,Q", "ALL", "xml")
+	if requestTest.Request() != "https://apps.bea.gov/api/data/?&UserID=D27C93B3-297B-4BA6-826C-25D85653E54D&method=GetData&DataSetName=NIPA&TableName=T10101&Frequency=A,Q&Year=ALL&ResultFormat=xml" {
+		t.Log(requestTest.Request())
+		t.Error("Test failed request is not valid")
+	}
+}
+
 func TestNIPADataRequest_Frequency(t *testing.T) {
 
 	nullCase := NIPADataRequest{
-		tableId:     0,
+		tableName:   "",
 		frequency:   "",
 		years:       "",
 		requestType: "",
@@ -1678,7 +1851,7 @@ func TestNIPADataRequest_Frequency(t *testing.T) {
 	}
 
 	nonNullCase := NIPADataRequest{
-		tableId:     0,
+		tableName:   "",
 		frequency:   "2003,20",
 		years:       "",
 		requestType: "",
@@ -1689,34 +1862,9 @@ func TestNIPADataRequest_Frequency(t *testing.T) {
 	}
 }
 
-func TestNIPADataRequest_TableId(t *testing.T) {
-
-	nullCase := NIPADataRequest{
-		tableId:     0,
-		frequency:   "",
-		years:       "",
-		requestType: "",
-	}
-	if nullCase.TableId() != 0 {
-		t.Error("tableId != 0")
-	}
-
-	nonNullCase := NIPADataRequest{
-		tableId:     2,
-		frequency:   "",
-		years:       "",
-		requestType: "",
-	}
-
-	if nonNullCase.TableId() != 2 {
-		t.Error("tableId != 2")
-	}
-
-}
-
 func TestNIPADataRequest_Years(t *testing.T) {
 	nullCase := NIPADataRequest{
-		tableId:     0,
+		tableName:   "",
 		frequency:   "",
 		years:       "",
 		requestType: "",
@@ -1725,7 +1873,7 @@ func TestNIPADataRequest_Years(t *testing.T) {
 		t.Error("nullCase.years != empty")
 	}
 	nonNullCase := NIPADataRequest{
-		tableId:     0,
+		tableName:   "",
 		frequency:   "",
 		years:       "2000, 2012",
 		requestType: "",
@@ -1738,7 +1886,7 @@ func TestNIPADataRequest_Years(t *testing.T) {
 
 func TestNIPADataRequest_SetYears(t *testing.T) {
 	nullCase := NIPADataRequest{
-		tableId:     0,
+		tableName:   "",
 		frequency:   "",
 		years:       "",
 		requestType: "",
@@ -1756,7 +1904,7 @@ func TestNIPADataRequest_SetYears(t *testing.T) {
 
 func TestNIPADataRequest_SetFrequency(t *testing.T) {
 	nullCase := NIPADataRequest{
-		tableId:     0,
+		tableName:   "",
 		frequency:   "",
 		years:       "",
 		requestType: "",
@@ -1772,24 +1920,9 @@ func TestNIPADataRequest_SetFrequency(t *testing.T) {
 	}
 }
 
-func TestNIPADataRequest_SetTableId(t *testing.T) {
-	nullCase := NIPADataRequest{
-		tableId:     0,
-		frequency:   "",
-		years:       "",
-		requestType: "",
-	}
-
-	nullCase.SetTableId(12)
-	if nullCase.TableId() != 12 {
-		t.Error("nullCase.TableId() != 12")
-	}
-
-}
-
 func TestNIPADataRequest_AddFrequency(t *testing.T) {
 	nullCase := NIPADataRequest{
-		tableId:   0,
+		tableName: "",
 		frequency: "",
 		years:     "",
 	}
@@ -1806,7 +1939,7 @@ func TestNIPADataRequest_AddFrequency(t *testing.T) {
 
 func TestNIPADataRequest_AddYear(t *testing.T) {
 	nullCase := NIPADataRequest{
-		tableId:     0,
+		tableName:   "",
 		frequency:   "",
 		years:       "",
 		requestType: "",
@@ -1825,7 +1958,7 @@ func TestNIPADataRequest_AddYear(t *testing.T) {
 
 func TestNIPADataRequest_RequestType(t *testing.T) {
 	nullCase := NIPADataRequest{
-		tableId:     0,
+		tableName:   "",
 		frequency:   "",
 		years:       "",
 		requestType: "",
@@ -1834,7 +1967,7 @@ func TestNIPADataRequest_RequestType(t *testing.T) {
 		t.Error("Test failed requestType != nil")
 	}
 	nonNullCase := NIPADataRequest{
-		tableId:     0,
+		tableName:   "",
 		frequency:   "",
 		years:       "",
 		requestType: "JSON",
@@ -1846,7 +1979,7 @@ func TestNIPADataRequest_RequestType(t *testing.T) {
 
 func TestNIPADataRequest_SetRequestType(t *testing.T) {
 	nullCase := NIPADataRequest{
-		tableId:     0,
+		tableName:   "",
 		frequency:   "",
 		years:       "",
 		requestType: "",
@@ -1862,29 +1995,29 @@ func TestNIPADataRequest_SetRequestType(t *testing.T) {
 
 func TestNIPADataRequest_String(t *testing.T) {
 	nonNullCase := NIPADataRequest{
-		tableId:     3,
+		tableName:   "Ryan",
 		frequency:   "2003,2004",
 		years:       "122,332",
 		requestType: "JSON",
 	}
 
-	if nonNullCase.String() != "3 2003,2004 122,332 JSON" {
+	if nonNullCase.String() != "Ryan 2003,2004 122,332 JSON" {
+		t.Log(nonNullCase.String())
 		t.Error("nonNullCase String()")
 	}
 }
 
 func TestNewNIPADataRequest(t *testing.T) {
 	newCase := NIPADataRequest{
-		tableId:     1,
+		tableName:   "",
 		frequency:   "good",
 		years:       "2012",
 		requestType: "JSON",
 	}
 
-	if newCase.TableId() != 1 {
-		t.Error("Test failed TableId != 1")
+	if newCase.TableName() != "" {
+		t.Error("Test failed tableName != nil")
 	}
-
 	if newCase.Frequency() != "good" {
 		t.Error("Test failed Frequency != good")
 	}
@@ -1897,6 +2030,7 @@ func TestNewNIPADataRequest(t *testing.T) {
 		t.Error("Test failed RequestType != JSON")
 	}
 }
+
 func TestNIUnderlyingDetailRequest_Frequency(t *testing.T) {
 	nullCase := NIUnderlyingDetailRequest{
 		tableName: "",
@@ -2075,8 +2209,15 @@ func TestNewNIUnderlyingDetailRequest(t *testing.T) {
 	}
 }
 
-//TODO: test new methods and constructor rewrite array of strings to string
-func TestRegionalRequestRequest_TableName(t *testing.T) {
+func TestNIUnderlyingDetailRequest_Request(t *testing.T) {
+	requestTest := NewNIUnderlyingDetailRequest("U20305", "A,Q,M", "ALL", "xml")
+	if requestTest.Request() != "https://apps.bea.gov/api/data/?&UserID=D27C93B3-297B-4BA6-826C-25D85653E54D&method=GetData&DataSetName=NIUnderlyingDetail&TableName=U20305&Frequency=A,Q,M&Year=ALL&ResultFormat=xml" {
+		t.Log(requestTest.Request())
+		t.Error("Test failed NIU request is not correct")
+	}
+}
+
+func TestRegionalRequest_TableName(t *testing.T) {
 	nullCase := RegionalRequest{
 		tableName: "",
 		lineCode:  0,
@@ -2099,7 +2240,30 @@ func TestRegionalRequestRequest_TableName(t *testing.T) {
 
 }
 
-func TestRegionalRequestRequest_LineCode(t *testing.T) {
+func TestRegionalRequest_RequestFormat(t *testing.T) {
+	nullCase := RegionalRequest{
+		tableName:     "",
+		lineCode:      0,
+		geoFips:       "",
+		year:          "",
+		requestFormat: "",
+	}
+	if nullCase.RequestFormat() != "" {
+		t.Error("Test failed RequestFormat is not nil")
+	}
+	nonNullCase := RegionalRequest{
+		tableName:     "",
+		lineCode:      0,
+		geoFips:       "",
+		year:          "",
+		requestFormat: "xml",
+	}
+	if nonNullCase.RequestFormat() != "xml" {
+		t.Error("Test failed RequestFormat != xml")
+	}
+}
+
+func TestRegionalRequest_LineCode(t *testing.T) {
 	nullCase := RegionalRequest{
 		tableName: "",
 		lineCode:  0,
@@ -2123,7 +2287,7 @@ func TestRegionalRequestRequest_LineCode(t *testing.T) {
 	}
 }
 
-func TestRegionalRequestRequest_GeoFips(t *testing.T) {
+func TestRegionalRequest_GeoFips(t *testing.T) {
 	nullCase := RegionalRequest{
 		tableName: "",
 		lineCode:  0,
@@ -2145,7 +2309,7 @@ func TestRegionalRequestRequest_GeoFips(t *testing.T) {
 
 }
 
-func TestRegionalRequestRequest_Year(t *testing.T) {
+func TestRegionalRequest_Year(t *testing.T) {
 	nullCase := RegionalRequest{
 		tableName: "",
 		lineCode:  0,
@@ -2167,7 +2331,28 @@ func TestRegionalRequestRequest_Year(t *testing.T) {
 
 }
 
-func TestRegionalRequestRequest_SetTableName(t *testing.T) {
+func TestRegionalRequest_SetRequestFormat(t *testing.T) {
+	nullCase := RegionalRequest{
+		tableName:     "",
+		lineCode:      0,
+		geoFips:       "",
+		year:          "",
+		requestFormat: "",
+	}
+	if nullCase.RequestFormat() != "" {
+		t.Error("Test failed RequestFormat != nil")
+	}
+	nullCase.SetRequestFormat("xml")
+	if nullCase.RequestFormat() != "xml" {
+		t.Error("Test failed RequestFormat != xml")
+	}
+}
+
+func TestRegionalRequest_Request(t *testing.T) {
+
+}
+
+func TestRegionalRequest_SetTableName(t *testing.T) {
 	nullCase := RegionalRequest{
 		tableName: "",
 		lineCode:  0,
@@ -2235,40 +2420,42 @@ func TestRegionalRequest_SetYear(t *testing.T) {
 	}
 }
 
-func TestNewRegional(t *testing.T) {
-	nullCase := NewRegionalRequest("", 0, "", "")
-
-	if nullCase.TableName() != "" && nullCase.LineCode() != 0 && nullCase.GeoFips() != "" && nullCase.Year() != "" {
-		t.Error("nullCase TestNewRegional")
+func TestNewRegionalRequest(t *testing.T) {
+	newCase := NewRegionalRequest("someName", 0, "A,Q,M", "ALL", "xml")
+	if newCase.TableName() != "someName" {
+		t.Error("Test failed TableName != someName")
 	}
-	nonNullCase := NewRegionalRequest("Matt", 20, "3002", "2010")
-	if nonNullCase.TableName() != "Matt" && nonNullCase.LineCode() != 20 && nonNullCase.GeoFips() != "3002" && nonNullCase.Year() != "2010" {
-		t.Error("nonNullCase TestNewRegional")
+	if newCase.LineCode() != 0 {
+		t.Error("Test failed LineCode != 0")
+	}
+	if newCase.GeoFips() != "A,Q,M" {
+		t.Error("Test failed GeoFips != A,Q,M")
+	}
+	if newCase.Year() != "ALL" {
+		t.Error("Test failed Year != ALL")
+	}
+	if newCase.RequestFormat() != "xml" {
+		t.Error("Test failed RequestFormat != xml")
 	}
 }
 
 func TestRegionalRequest_String(t *testing.T) {
-	nonNullCase := NewRegionalRequest("bryan", 22, "21", "322")
-	if nonNullCase.String() != "bryan, 22, 21, 322" {
-		t.Error("nonNullCase String")
+	stringCase := RegionalRequest{
+		tableName:     "Ryan",
+		lineCode:      0,
+		geoFips:       "AM",
+		year:          "2013",
+		requestFormat: "XML",
+	}
+
+	if stringCase.String() != "Ryan 0 AM 2013 XML" {
+		t.Log(stringCase.String())
+		t.Error("Test failed string case != Ryan 0 AM 2013 XML")
 	}
 }
 
-func TestUnderLyingGDPPerIndustry_TableId(t *testing.T) {
-	nullCase := UnderLyingGDPPerIndustryRequest{
-		tableId:      0,
-		frequency:    "",
-		years:        "",
-		industry:     "",
-		resultFormat: "",
-	}
-	if nullCase.TableId() != 0 {
-		t.Error("nullCase.TableId() != 0")
-	}
-}
-
-func TestUnderLyingGDPPerIndustryRequest_Frequency(t *testing.T) {
-	nullCase := UnderLyingGDPPerIndustryRequest{
+func TestUnderLyingGDPByIndustryRequest_Frequency(t *testing.T) {
+	nullCase := UnderLyingGDPByIndustryRequest{
 		tableId:      0,
 		frequency:    "",
 		years:        "",
@@ -2281,8 +2468,8 @@ func TestUnderLyingGDPPerIndustryRequest_Frequency(t *testing.T) {
 
 }
 
-func TestUnderLyingGDPPerIndustryRequest_Years(t *testing.T) {
-	nullCase := UnderLyingGDPPerIndustryRequest{
+func TestUnderLyingGDPByIndustryRequest_Years(t *testing.T) {
+	nullCase := UnderLyingGDPByIndustryRequest{
 		tableId:      0,
 		frequency:    "",
 		years:        "",
@@ -2295,8 +2482,8 @@ func TestUnderLyingGDPPerIndustryRequest_Years(t *testing.T) {
 
 }
 
-func TestUnderLyingGDPPerIndustryRequest_Industry(t *testing.T) {
-	nullCase := UnderLyingGDPPerIndustryRequest{
+func TestUnderLyingGDPByIndustryRequest_Industry(t *testing.T) {
+	nullCase := UnderLyingGDPByIndustryRequest{
 		tableId:      0,
 		frequency:    "",
 		years:        "",
@@ -2310,8 +2497,8 @@ func TestUnderLyingGDPPerIndustryRequest_Industry(t *testing.T) {
 
 }
 
-func TestUnderLyingGDPPerIndustryRequest_SetTableId(t *testing.T) {
-	nullCase := UnderLyingGDPPerIndustryRequest{
+func TestUnderLyingGDPByIndustryRequest_SetTableId(t *testing.T) {
+	nullCase := UnderLyingGDPByIndustryRequest{
 		tableId:      0,
 		frequency:    "",
 		years:        "",
@@ -2330,8 +2517,8 @@ func TestUnderLyingGDPPerIndustryRequest_SetTableId(t *testing.T) {
 	}
 }
 
-func TestUnderLyingGDPPerIndustryRequest_SetFrequency(t *testing.T) {
-	nullCase := UnderLyingGDPPerIndustryRequest{
+func TestUnderLyingGDPByIndustryRequest_SetFrequency(t *testing.T) {
+	nullCase := UnderLyingGDPByIndustryRequest{
 		tableId:      0,
 		frequency:    "",
 		years:        "",
@@ -2345,8 +2532,8 @@ func TestUnderLyingGDPPerIndustryRequest_SetFrequency(t *testing.T) {
 	}
 }
 
-func TestUnderLyingGDPPerIndustryRequest_SetYears(t *testing.T) {
-	nullCase := UnderLyingGDPPerIndustryRequest{
+func TestUnderLyingGDPByIndustryRequest_SetYears(t *testing.T) {
+	nullCase := UnderLyingGDPByIndustryRequest{
 		tableId:      0,
 		frequency:    "",
 		years:        "",
@@ -2361,8 +2548,8 @@ func TestUnderLyingGDPPerIndustryRequest_SetYears(t *testing.T) {
 
 }
 
-func TestUnderLyingGDPPerIndustryRequest_SetIndustry(t *testing.T) {
-	nullCase := UnderLyingGDPPerIndustryRequest{
+func TestUnderLyingGDPByIndustryRequest_SetIndustry(t *testing.T) {
+	nullCase := UnderLyingGDPByIndustryRequest{
 		tableId:      0,
 		frequency:    "",
 		years:        "",
@@ -2382,8 +2569,8 @@ func TestUnderLyingGDPPerIndustryRequest_SetIndustry(t *testing.T) {
 
 }
 
-func TestUnderLyingGDPPerIndustryRequest_AddYear(t *testing.T) {
-	nullCase := UnderLyingGDPPerIndustryRequest{
+func TestUnderLyingGDPByIndustryRequest_AddYear(t *testing.T) {
+	nullCase := UnderLyingGDPByIndustryRequest{
 		tableId:      0,
 		frequency:    "",
 		years:        "",
@@ -2398,8 +2585,8 @@ func TestUnderLyingGDPPerIndustryRequest_AddYear(t *testing.T) {
 
 }
 
-func TestUnderLyingGDPPerIndustryRequest_String(t *testing.T) {
-	nullCase := UnderLyingGDPPerIndustryRequest{
+func TestUnderLyingGDPByIndustryRequest_String(t *testing.T) {
+	nullCase := UnderLyingGDPByIndustryRequest{
 		tableId:      2,
 		frequency:    "yearly",
 		years:        "2000,2010",
@@ -2413,8 +2600,8 @@ func TestUnderLyingGDPPerIndustryRequest_String(t *testing.T) {
 
 }
 
-func TestUnderLyingGDPPerIndustryRequest_ResultFormat(t *testing.T) {
-	nullCase := UnderLyingGDPPerIndustryRequest{
+func TestUnderLyingGDPByIndustryRequest_ResultFormat(t *testing.T) {
+	nullCase := UnderLyingGDPByIndustryRequest{
 		tableId:      0,
 		frequency:    "",
 		years:        "",
@@ -2424,7 +2611,7 @@ func TestUnderLyingGDPPerIndustryRequest_ResultFormat(t *testing.T) {
 	if nullCase.ResultFormat() != "" {
 		t.Error("Test failed resultFormat != nil")
 	}
-	nonNullCase := UnderLyingGDPPerIndustryRequest{
+	nonNullCase := UnderLyingGDPByIndustryRequest{
 		tableId:      0,
 		frequency:    "",
 		years:        "",
@@ -2436,8 +2623,8 @@ func TestUnderLyingGDPPerIndustryRequest_ResultFormat(t *testing.T) {
 	}
 }
 
-func TestUnderLyingGDPPerIndustryRequest_SetResultFormat(t *testing.T) {
-	nonNullCase := UnderLyingGDPPerIndustryRequest{
+func TestUnderLyingGDPByIndustryRequest_SetResultFormat(t *testing.T) {
+	nonNullCase := UnderLyingGDPByIndustryRequest{
 		tableId:      0,
 		frequency:    "",
 		years:        "",
@@ -2453,8 +2640,8 @@ func TestUnderLyingGDPPerIndustryRequest_SetResultFormat(t *testing.T) {
 	}
 }
 
-func TestNewUnderLyingGDPPerIndustryRequest(t *testing.T) {
-	newCase := NewUnderLyingGDPPerIndustryRequest(1, "moderate", "2012", "Steel", "JSON")
+func TestNewUnderLyingGDPByIndustryRequest(t *testing.T) {
+	newCase := NewUnderLyingGDPByIndustryRequest(1, "moderate", "2012", "Steel", "JSON")
 	if newCase.TableId() != 1 {
 		t.Error("Test failed tableId != 1")
 	}
@@ -2470,4 +2657,35 @@ func TestNewUnderLyingGDPPerIndustryRequest(t *testing.T) {
 	if newCase.ResultFormat() != "JSON" {
 		t.Error("Test failed ResultFormat != JSON")
 	}
+}
+
+func TestUnderLyingGDPByIndustryRequest_TableId(t *testing.T) {
+	nullCase := UnderLyingGDPByIndustryRequest{
+		tableId:      0,
+		frequency:    "",
+		years:        "",
+		industry:     "",
+		resultFormat: "",
+	}
+	if nullCase.TableId() != 0 {
+		t.Error("Test failed TableId != 0")
+	}
+	nonNullCase := UnderLyingGDPByIndustryRequest{
+		tableId:      1,
+		frequency:    "",
+		years:        "",
+		industry:     "",
+		resultFormat: "",
+	}
+	if nonNullCase.TableId() != 1 {
+		t.Error("Test failed TableId != 1")
+	}
+}
+
+func TestUnderLyingGDPByIndustryRequest_Request(t *testing.T) {
+	testRequest := NewUnderLyingGDPByIndustryRequest(210, "A", "2013,2012", "ALL", "xml")
+	if testRequest.Request() != "https://apps.bea.gov/api/data/?&UserID=D27C93B3-297B-4BA6-826C-25D85653E54D&method=GetData&DataSetName=underlyingGDPByIndustry&Year=2013,2012&Industry=ALL&tableID=210&Frequency=A&ResultFormat=xml" {
+		t.Error("Test failed request is not correct")
+	}
+
 }
